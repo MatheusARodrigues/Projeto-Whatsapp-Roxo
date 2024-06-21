@@ -41,24 +41,25 @@ const Configuracoes = () => {
         <View style={styles.container}>
             <Text style={styles.header}>Configurações</Text>
             <View style={styles.messageContainer}>
-            <View style={styles.profileImageContainer}>
-        <Image source={{ uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' }}  style={styles.profileImage}
-        />
-        </View>
-        
-        <TextInput
-        style={styles.input}
-        placeholder="Nome:"
-        value="Usuário"
-        editable={false} 
-        />
-
-        <TextInput
-        style={styles.input}
-        placeholder="Recado:"
-        value="O valioso é invisivel aos olhos"
-        editable={false} 
-        />
+                <View style={styles.profileImageContainer}>
+                    <Image source={{ uri: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' }} style={styles.profileImage}/>
+                </View>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input1}
+                        placeholder="Nome"
+                        value="Usuário"
+                        editable={false}
+                        placeholderTextColor={'#fff'}
+                    />
+                    <TextInput
+                        style={styles.input2}
+                        placeholder="Recado"
+                        value="O justo é justo🏴‍☠️"
+                        editable={false}
+                        placeholderTextColor={'#fff'}
+                    />
+                </View>
             </View>
             <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Alterar Tema" onPress={handleThemeChange} />
             <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Alterar Wallpaper" onPress={handleWallpaperChange} />

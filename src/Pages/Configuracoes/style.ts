@@ -53,15 +53,40 @@ const styles = StyleSheet.create({
         borderBottomColor: '#1DB499',
     },
 
-    input: {
-        height: 40,
-        width: 1000,
-        backgroundColor: '#ffffff',
-        paddingHorizontal: 10,
+
+
+    inputContainer: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         marginBottom: 10,
-        borderRadius: 5,
-        marginTop: 20,
     },
+
+    inputRow: {
+        flexDirection: 'row',
+    },
+
+    input1: {
+        height: 40,
+        width: '100%',
+        backgroundColor: 'none',
+        paddingHorizontal: 10,
+        marginTop: 30,
+        borderRadius: 5,
+        marginRight: 0,
+    },
+
+    input2: {
+        height: 40,
+        width: '100%',
+        backgroundColor: 'none',
+        paddingHorizontal: 10,
+        marginBottom: 40,
+        borderRadius: 5,
+        marginRight: 0,
+    },
+
+    
 
 
 });
