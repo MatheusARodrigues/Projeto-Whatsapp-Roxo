@@ -44,7 +44,7 @@ const Arquivadas = () => {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-            <Image source={require('../../Assets/logo.png')} style={styles.logo} />
+            <Image source={require('../../Assets/zap1.png')} style={styles.logo} />
                 <Text style={styles.headerText}>Arquivadas</Text>   
                 <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                     <Text style={styles.menuButtonText}>⋮</Text>
