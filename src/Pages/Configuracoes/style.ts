@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ede7f6', // Cor de fundo do nosso app roxa clarinha
+        backgroundColor: '#ede7f6',
         padding: 20,
     },
     header: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#4a148c', // Cor roxa escura para o texto no nosso app
+        color: '#4a148c',
         marginBottom: 20,
         borderBottomWidth: 2,
         borderBottomColor: '#1DB499',
@@ -29,66 +29,58 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 5,
     },
-
-    profileImageContainer: {
-        width: 150,
-        height: 150,
-        borderRadius: 75,
-        overflow: 'hidden', 
+    profileImageWrapper: {
+        position: 'relative',
         marginBottom: 20,
-        backgroundColor: 'white',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
     },
-    
     profileImage: {
         width: 150,
         height: 150,
+        borderRadius: 75,
     },
-
+    cameraIconContainer: {
+        position: 'absolute',
+        bottom: 5,
+        right: 58,
+        backgroundColor: 'white',
+        borderRadius: 15,
+        padding: 5,
+    },
+    cameraIcon: {
+        width: 20,
+        height: 20,
+    },
     messageContainer: {
         flexDirection: 'row',
         padding: 5,
         borderBottomWidth: 2,
         borderBottomColor: '#1DB499',
     },
-
-
-
     inputContainer: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        flex: 1,
+        marginLeft: 10,
+    },
+    editableContainer: {
+        flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
     },
-
-    inputRow: {
-        flexDirection: 'row',
+    input: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        padding: 5,
+        color: '#000',
+        flex: 1,
     },
-
-    input1: {
-        height: 40,
-        width: '100%',
-        backgroundColor: 'none',
-        paddingHorizontal: 10,
-        marginTop: 30,
-        borderRadius: 5,
-        marginRight: 0,
+    inputEditable: {
+        backgroundColor: '#fff',
+        color: '#000',
     },
-
-    input2: {
-        height: 40,
-        width: '100%',
-        backgroundColor: 'none',
-        paddingHorizontal: 10,
-        marginBottom: 40,
-        borderRadius: 5,
-        marginRight: 0,
+    editIcon: {
+        width: 20,
+        height: 20,
+        marginLeft: 10,
     },
-
-    
-
-
 });
 
 export default styles;
