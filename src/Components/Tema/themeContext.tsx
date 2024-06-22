@@ -31,52 +31,66 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
 export const useTheme = () => useContext(ThemeContext);
 
-const lightStyles = StyleSheet.create({
+const lightTheme = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#ede7f6',
-        padding: 20,
     },
     header: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#4a148c',
-        marginBottom: 20,
+        backgroundColor: '#4b0082',
     },
-    button: {
-        marginTop: 20,
-    },
-    text: {
-        color: '#000',
+    headerText: {
+        color: '#fff',
     },
     menuButtonText: {
-        fontSize: 24,
         color: '#fff',
+    },
+    info: {
+        backgroundColor: '#e6e6fa',
+        color: '#555',
+    },
+    contact: {
+        color: '#4b0082',
+    },
+    preview: {
+        color: '#555',
+    },
+    date: {
+        color: '#aaa',
+    },
+    footerText: {
+        color: '#4b0082',
     },
 });
 
-const darkStyles = StyleSheet.create({
+const darkTheme = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#121212',
-        padding: 20,
+        backgroundColor: '#301934',
     },
     header: {
-        fontSize: 24,
-        fontWeight: 'bold',
+        backgroundColor: '#1f1f1f',
+    },
+    headerText: {
         color: '#bb86fc',
-        marginBottom: 20,
-    },
-    button: {
-        marginTop: 20,
-    },
-    text: {
-        color: '#fff',
     },
     menuButtonText: {
-        fontSize: 24,
+        color: '#bb86fc',
+    },
+    info: {
+        backgroundColor: '#333',
+        color: '#ccc',
+    },
+    contact: {
+        color: '#bb86fc',
+    },
+    preview: {
+        color: '#bbb',
+    },
+    date: {
+        color: '#888',
+    },
+    footerText: {
         color: '#bb86fc',
     },
 });
 
-export const getStyles = (theme: string) => (theme === 'light' ? lightStyles : darkStyles);
+export const getThemeStyles = (theme: string) => (theme === 'light' ? lightTheme : darkTheme);

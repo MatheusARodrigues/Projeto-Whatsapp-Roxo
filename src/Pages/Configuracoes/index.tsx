@@ -1,38 +1,28 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Alert, Image, TextInput } from 'react-native';
+import { View, Text, Alert, Image, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import styles from './style';
 import CustomButton from '../../Components/Botao/CustomButton';
+import styles from './style';
+import { useTheme } from '../../Components/Tema/themeContext';
 
 const Configuracoes = () => {
     const navigation = useNavigation();
+    const { toggleTheme } = useTheme();
 
     const handleThemeChange = () => {
         Alert.alert(
             "Alterar Tema",
-            "Deseja mudar para o tema escuro?",
+            "Deseja mudar o tema?",
             [
                 {
                     text: "Não",
                     onPress: () => console.log("Tema claro mantido"),
                     style: "cancel"
                 },
-                { text: "Sim", onPress: () => console.log("Tema escuro ativado") }
-            ]
-        );
-    };
-
-    const handleWallpaperChange = () => {
-        Alert.alert(
-            "Alterar Wallpaper",
-            "Deseja mudar o wallpaper?",
-            [
-                {
-                    text: "Não",
-                    onPress: () => console.log("Wallpaper mantido"),
-                    style: "cancel"
-                },
-                { text: "Sim", onPress: () => console.log("Wallpaper alterado") }
+                { text: "Sim", onPress: () => {
+                    toggleTheme();
+                    console.log("Tema escuro ativado");
+                } }
             ]
         );
     };
@@ -62,7 +52,6 @@ const Configuracoes = () => {
                 </View>
             </View>
             <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Alterar Tema" onPress={handleThemeChange} />
-            <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Alterar Wallpaper" onPress={handleWallpaperChange} />
             <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Voltar" onPress={() => navigation.goBack()} />
         </View>
     );

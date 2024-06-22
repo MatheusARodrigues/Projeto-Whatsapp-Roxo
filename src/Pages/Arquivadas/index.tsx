@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, ListRenderItem } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import styles from './style';
+import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
+import baseStyles from './style'; // Importe seus estilos base
 
 type Message = {
     id: string;
@@ -24,41 +25,42 @@ type RootStackParamList = {
 
 const Arquivadas = () => {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
+    const { theme } = useTheme();
+    const themeStyles = getThemeStyles(theme);
 
     const handleMenuPress = () => {
         navigation.navigate('Configuracoes');
     };
 
     const renderMessage: ListRenderItem<Message> = ({ item }) => (
-        <View style={styles.messageContainer}>
-            <Image style={styles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
-            <View style={styles.textContainer}>
-                <Text style={styles.contact}>{item.contact}</Text>
-                <Text style={styles.preview}>{item.preview}</Text>
-                <Text style={styles.date}>{item.date}</Text>
+        <View style={baseStyles.messageContainer}>
+            <Image style={baseStyles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
+            <View style={baseStyles.textContainer}>
+                <Text style={[baseStyles.contact, themeStyles.contact]}>{item.contact}</Text>
+                <Text style={[baseStyles.preview, themeStyles.preview]}>{item.preview}</Text>
+                <Text style={[baseStyles.date, themeStyles.date]}>{item.date}</Text>
             </View>
         </View>
     );
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-            <Image source={require('../../Assets/zap1.png')} style={styles.logo} />
-                <Text style={styles.headerText}>Arquivadas</Text>   
-                <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
-                    <Text style={styles.menuButtonText}>⋮</Text>
+        <View style={[baseStyles.container, themeStyles.container]}>
+            <View style={[baseStyles.header, themeStyles.header]}>
+                <Image source={require('../../Assets/zap1.png')} style={baseStyles.logo} />
+                <Text style={[baseStyles.headerText, themeStyles.headerText]}>Arquivadas</Text>
+                <TouchableOpacity onPress={handleMenuPress} style={baseStyles.menuButton}>
+                    <Text style={[baseStyles.menuButtonText, themeStyles.menuButtonText]}>⋮</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.info}>Estas conversas permanecem arquivadas quando você recebe novas mensagens. Toque para mudar.</Text>
+            <Text style={[baseStyles.info, themeStyles.info]}>Estas conversas permanecem arquivadas quando você recebe novas mensagens. Toque para mudar.</Text>
             <FlatList
                 data={messages}
                 renderItem={renderMessage}
                 keyExtractor={item => item.id}
             />
-            <View style={styles.footer}>
-                <Image style={styles.lockIcon} source={require('../../Assets/cadeado.png')} />
-                <Text style={styles.footerText}>
+            <View style={baseStyles.footer}>
+                <Image style={baseStyles.lockIcon} source={require('../../Assets/cadeado.png')} />
+                <Text style={[baseStyles.footerText, themeStyles.footerText]}>
                     Suas mensagens pessoais são protegidas com a criptografia de ponta a ponta
                 </Text>
             </View>
