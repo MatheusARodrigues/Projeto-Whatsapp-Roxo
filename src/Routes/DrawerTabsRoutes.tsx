@@ -5,7 +5,7 @@ import React from "react";
 import Status from "../Pages/Status";
 import { Chamadas } from "../Pages/Chamadas";
 import Arquivadas from "../Pages/Arquivadas";
-import Configuracoes from "../Pages/Configuracoes";
+
 
 
 const Drawer = createDrawerNavigator();
@@ -17,7 +17,6 @@ export function DrawerTabsRoutes(){
             <Drawer.Screen name="Status" component={Status}/>
             <Drawer.Screen name="Chamadas" component={Chamadas}/>
             <Drawer.Screen name="Arquivadas" component={Arquivadas}/>
-            <Drawer.Screen name="Configurações" component={Configuracoes}/>
         </Drawer.Navigator>
     )
 }

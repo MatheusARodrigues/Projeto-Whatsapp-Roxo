@@ -30,9 +30,7 @@ const styles = StyleSheet.create({
     },
     messageContainer: {
         flexDirection: 'row',
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        padding: 5,
     },
     image: {
         width: 50,
@@ -69,6 +67,13 @@ const styles = StyleSheet.create({
     },
     footerText: {
         color: '#4b0082',
+    },
+
+    chatItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
     },
 });
 

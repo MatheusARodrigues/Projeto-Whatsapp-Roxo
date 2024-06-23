@@ -20,7 +20,7 @@ const messages = [
 
 type RootStackParamList = {
     Arquivadas: undefined;
-    Configuracoes: undefined;
+    StackConfiguracoes: undefined;
 };
 
 const Arquivadas = () => {
@@ -29,7 +29,7 @@ const Arquivadas = () => {
     const themeStyles = getThemeStyles(theme);
 
     const handleMenuPress = () => {
-        navigation.navigate('Configuracoes');
+        navigation.navigate('StackConfiguracoes');
     };
 
     const renderMessage: ListRenderItem<Message> = ({ item }) => (

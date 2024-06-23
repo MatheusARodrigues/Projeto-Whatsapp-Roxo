@@ -4,75 +4,79 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import styles from './style';
 
 type Message = {
-    id: string;
-    contact: string;
-    preview: string;
-    date: string;
+  id: string;
+  contact: string;
+  preview: string;
+  date: string;
 };
 
 const messages = [
-    { id: '1', contact: '+55 24 99324-0212', preview: 'Bom dia!', date: '15/06/2024' },
-    { id: '2', contact: 'Mensagem automática', preview: 'Reunião marcada para hoje.', date: '15/06/2024' },
-    { id: '3', contact: '+55 11 98765-4321', preview: 'Oi, tudo bem?', date: '15/06/2024' },
-    { id: '4', contact: '+55 21 99876-5432', preview: 'Boa tarde!', date: '15/06/2024' },
-    { id: '5', contact: 'Grupo de família', preview: 'Foto do churrasco de domingo.', date: '14/06/2024' },
-    { id: '6', contact: '+55 31 8765-4321', preview: 'E aí, como foi o dia?', date: '14/06/2024' },
-    { id: '7', contact: '+55 85 99345-6789', preview: 'Boa noite!', date: '14/06/2024' },
-    { id: '8', contact: 'Mãe', preview: 'Liguei para te avisar...', date: '13/06/2024' },
-    { id: '9', contact: 'Grupo de trabalho', preview: 'Lembrete: reunião amanhã cedo.', date: '13/06/2024' },
-    { id: '10', contact: '+55 47 98765-1234', preview: 'Oi, sumido!', date: '13/06/2024' },
-    { id: '11', contact: '+55 54 99876-5432', preview: 'Novo número, me adiciona!', date: '12/06/2024' },
-    { id: '12', contact: '+55 61 8765-4321', preview: 'Preciso conversar com você.', date: '12/06/2024' },
-    { id: '13', contact: '+55 41 99345-6789', preview: 'Boa viagem!', date: '12/06/2024' },
-    { id: '14', contact: '+55 84 98765-4321', preview: 'Feliz aniversário!', date: '11/06/2024' },
-    { id: '15', contact: '+55 32 99876-5432', preview: 'Vamos marcar algo?', date: '11/06/2024' },
+  { id: '1', contact: '+55 24 99324-0212', preview: 'Bom dia!', date: '15/06/2024' },
+  { id: '2', contact: 'Aula 2024', preview: 'Foto', date: '14/06/2024' },
+  { id: '3', contact: ':)', preview: 'Você bloqueou esse contato', date: '' },
+  { id: '4', contact: '+55 18 8839-1213', preview: 'Áudio', date: '17/05/2020' },
+  { id: '5', contact: 'Nome do contato', preview: 'Mensagem', date: '16/05/2020' },
+  { id: '6', contact: 'Nome do contato', preview: 'Mensagem', date: '15/05/2020' },
+  { id: '7', contact: 'Nome do contato', preview: 'Mensagem', date: '14/05/2020' },
+  { id: '8', contact: 'Nome do contato', preview: 'Mensagem', date: '13/05/2020' },
+  { id: '9', contact: 'Nome do contato', preview: 'Mensagem', date: '12/05/2020' },
+  { id: '10', contact: 'Nome do contato', preview: 'Mensagem', date: '11/05/2020' },
+  { id: '11', contact: 'Nome do contato', preview: 'Mensagem', date: '10/05/2020' },
+  { id: '12', contact: 'Nome do contato', preview: 'Mensagem', date: '09/05/2020' },
+  { id: '13', contact: 'Nome do contato', preview: 'Mensagem', date: '08/05/2020' },
+  { id: '14', contact: 'Nome do contato', preview: 'Mensagem', date: '07/05/2020' },
 ];
 
 type RootStackParamList = {
-    Arquivadas: undefined;
-    Configuracoes: undefined;
+  Arquivadas: undefined;
+  StackConfiguracoes: undefined;
+  StackTelaConversas: { chatId: string; chatName: string };
 };
 
-export function Home(){
-    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+export function Home() {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
+  const handleMenuPress = () => {
+    navigation.navigate('StackConfiguracoes');
+  };
 
-    const handleMenuPress = () => {
-        navigation.navigate('Configuracoes');
-    };
-
-    const renderMessage: ListRenderItem<Message> = ({ item }) => (
-        <View style={styles.messageContainer}>
-            <Image style={styles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
-            <View style={styles.textContainer}>
-                <Text style={styles.contact}>{item.contact}</Text>
-                <Text style={styles.preview}>{item.preview}</Text>
-                <Text style={styles.date}>{item.date}</Text>
-            </View>
+  const renderMessage: ListRenderItem<Message> = ({ item }) => (
+    <TouchableOpacity
+      style={styles.chatItem}
+      onPress={() => navigation.navigate('StackTelaConversas', { chatId: item.id, chatName: item.contact })}
+    >
+      <View style={styles.messageContainer}>
+        <Image style={styles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
+        <View style={styles.textContainer}>
+          <Text style={styles.contact}>{item.contact}</Text>
+          <Text style={styles.preview}>{item.preview}</Text>
+          <Text style={styles.date}>{item.date}</Text>
         </View>
-    );
+      </View>
+    </TouchableOpacity>
+  );
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-            <Image source={require('../../Assets/logo.png')} style={styles.logo} />
-                <Text style={styles.headerText}>Home</Text>   
-                <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
-                    <Text style={styles.menuButtonText}>⋮</Text>
-                </TouchableOpacity>
-            </View>
-            <FlatList
-                data={messages}
-                renderItem={renderMessage}
-                keyExtractor={item => item.id}
-                overScrollMode="never"
-            />
-            <View style={styles.footer}>
-                <Image style={styles.lockIcon} source={require('../../Assets/cadeado.png')} />
-                <Text style={styles.footerText}>
-                    Suas mensagens pessoais são protegidas com a criptografia de ponta a ponta
-                </Text>
-            </View>
-        </View>
-    );
-};
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Image source={require('../../Assets/zap1.png')} style={styles.logo} />
+        <Text style={styles.headerText}>Home</Text>
+        <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
+          <Text style={styles.menuButtonText}>⋮</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={messages}
+        renderItem={renderMessage}
+        keyExtractor={(item) => item.id}
+        overScrollMode="never"
+      />
+      <View style={styles.footer}>
+        <Image style={styles.lockIcon} source={require('../../Assets/cadeado.png')} />
+        <Text style={styles.footerText}>
+          Suas mensagens pessoais são protegidas com a criptografia de ponta a ponta
+        </Text>
+      </View>
+    </View>
+  );
+}
