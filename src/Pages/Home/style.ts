@@ -5,6 +5,24 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ede7f6',
     },
+
+    button: {
+        marginTop: 10,
+        height: 50,
+        width: '95%',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#935FB4',
+        alignContent: 'center',
+        alignSelf: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 5,
+    },
+
     header: {
         flexDirection: 'row',
         alignItems: 'center',

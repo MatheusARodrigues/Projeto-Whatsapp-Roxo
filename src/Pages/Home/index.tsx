@@ -1,7 +1,8 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, ListRenderItem } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Image, FlatList, ListRenderItem, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import styles from './style';
+import CustomButton from '../../Components/Botao/CustomButton';
 
 type Message = {
   id: string;
@@ -35,11 +36,26 @@ type RootStackParamList = {
 
 export function Home() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const [showButton, setShowButton] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const handleMenuPress = () => {
     navigation.navigate('StackConfiguracoes');
   };
 
+  const handleArquivadas = () => {
+    navigation.navigate('Arquivadas');
+  };
+
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const currentScrollY = event.nativeEvent.contentOffset.y;
+    if (currentScrollY > lastScrollY) {
+      setShowButton(false);
+    } else if (currentScrollY === 0) {
+      setShowButton(true);
+    }
+    setLastScrollY(currentScrollY);
+  };
   const renderMessage: ListRenderItem<Message> = ({ item }) => (
     <TouchableOpacity
       style={styles.chatItem}
@@ -65,11 +81,21 @@ export function Home() {
           <Text style={styles.menuButtonText}>⋮</Text>
         </TouchableOpacity>
       </View>
+      {showButton && (
+        <CustomButton
+          buttonStyle={styles.button}
+          textStyle={{ color: 'black', fontSize: 18 }}
+          title="Arquivadas"
+          onPress={handleArquivadas}
+        />
+      )}
       <FlatList
         data={messages}
         renderItem={renderMessage}
         keyExtractor={(item) => item.id}
         overScrollMode="never"
+        onScroll={handleScroll}
+        scrollEventThrottle={100000} // Controla a frequência do evento de scroll
       />
       <View style={styles.footer}>
         <Image style={styles.lockIcon} source={require('../../Assets/cadeado.png')} />
