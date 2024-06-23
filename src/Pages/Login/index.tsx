@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, Image, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { Text, View, Alert, Image, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { TextInputComponent } from '../../Components/TextInput'
 import CustomButton from '../../Components/Botao/CustomButton';
 import { useNavigation } from '@react-navigation/native';
@@ -9,20 +9,26 @@ import { styles } from './style';
 
 export function Login() { 
 
-  const [number, setNumber] = useState<string>();
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   
   const navigator = useNavigation();
  
-  const handleNumber = (value: string) => {
-    setNumber(value);
+  const handlePhoneNumber = (value: string) => {
+    setPhoneNumber(value)
   }
 
   const handlePassword = (value: string) => {
     setPassword(value)
   }
-
-
+  
+  const handleLogin = () => {
+    if(phoneNumber) {
+      navigator.navigate("StackDrawerPages", { name: "Login" })
+    } else {
+      Alert.alert("Credenciais invalidas!")
+    }
+  }
   
   return (
     
@@ -34,24 +40,24 @@ export function Login() {
         <Text style={styles.title}>Bem vindo(a) ao WhatsApp</Text>
 
       <TextInputComponent
-        recebendoFuncao={handleNumber}
-        recebendoValue={number}
-        recebendoPlaceHolder="Digite seu número"
+        onChangeValue={handlePhoneNumber}
+        value={phoneNumber}
+        placeHolder="Digite seu número..."
         
       />
 
       <TextInputComponent
-        recebendoFuncao={handlePassword}
-        recebendoValue={password}
-        recebendoPlaceHolder="Digite sua senha"
-        recebendoTipoDoInput={true}
+       onChangeValue={handlePassword}
+        value={password}
+        placeHolder="Digite sua senha..."
+        type={true}
       />
 
       <CustomButton 
       buttonStyle={styles.button} 
       textStyle={{ color: '#4a148c', fontSize: 20, fontWeight: 'bold' }} 
       title="Entrar" 
-      handleOnChange={handleLogin}
+      onPress={handleLogin}
       />
 
     </View>
