@@ -3,30 +3,30 @@ import { TextInput } from 'react-native'
 import { styles } from './style'
 
 type PropsComponent = {
-  recebendoPlaceHolder?: string;
-  recebendoValue: string;
-  recebendoFuncao: (value: string) => void;
-  recebendoTipoDoInput?: boolean;
-  recebendoBackgroundColor?: string;
+  placeHolder?: string;
+  value: string;
+  onChangeValue: (value: string) => void;
+  type?: boolean;
+  backgroundColor?: string;
 }
 
 export function TextInputComponent({
-  recebendoFuncao, 
-  recebendoPlaceHolder, 
-  recebendoValue,
-  recebendoTipoDoInput,
-  recebendoBackgroundColor
+  onChangeValue, 
+  placeHolder, 
+  value,
+  type,
+  backgroundColor
   }: PropsComponent) {
 
   return (
     <TextInput
-      onChangeText={recebendoFuncao}
-      value={recebendoValue}
+      onChangeText={onChangeValue}
+      value={value}
       style={[styles.styleInput, { 
-        backgroundColor: recebendoBackgroundColor ? recebendoBackgroundColor : '#fff'
+        backgroundColor: backgroundColor ? backgroundColor : '#fff'
        }]}
-      placeholder={recebendoPlaceHolder ? recebendoPlaceHolder : "Placeholder default"}
-      secureTextEntry={recebendoTipoDoInput}
+      placeholder={placeHolder ? placeHolder : "Placeholder default"}
+      secureTextEntry={type}
     />
   )
 }
