@@ -16,8 +16,8 @@ export function DrawerTabsRoutes(){
             <Drawer.Screen name="Home" component={Home}/>
             <Drawer.Screen name="Status" component={Status}/>
             <Drawer.Screen name="Chamadas" component={Chamadas}/>
-            <Drawer.Screen name="Status" component={Arquivadas}/>
-            <Drawer.Screen name="Status" component={Configuracoes}/>
+            <Drawer.Screen name="Arquivadas" component={Arquivadas}/>
+            <Drawer.Screen name="Configurações" component={Configuracoes}/>
         </Drawer.Navigator>
     )
 }
