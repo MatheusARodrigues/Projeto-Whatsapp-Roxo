@@ -34,36 +34,36 @@ export const useTheme = (): ThemeContextType => {
 
 const lightTheme = StyleSheet.create({
   container: {
-    backgroundColor: '#ede7f6', // Cor de fundo roxo claro
+    backgroundColor: '#ede7f6',
   },
   header: {
-    backgroundColor: '#4b0082', // Cor roxa para o header
+    backgroundColor: '#4b0082',
   },
   headerText: {
-    color: '#fff', // Texto branco para o headerText
+    color: '#fff',
   },
   menuButtonText: {
-    color: '#fff', // Texto branco para o menuButtonText
+    color: '#fff',
   },
   info: {
-    backgroundColor: '#e6e6fa', // Cor roxa clara para o info
-    color: '#555', // Texto cinza para o info
+    backgroundColor: '#e6e6fa',
+    color: '#555',
   },
   contact: {
-    color: '#4b0082', // Roxo escuro para o contact
+    color: '#4b0082', 
   },
   preview: {
-    color: '#555', // Texto cinza para o preview
+    color: '#555', 
   },
   date: {
-    color: '#aaa', // Texto cinza para o date
+    color: '#aaa', 
   },
   footerText: {
-    color: '#4b0082', // Roxo escuro para o footerText
+    color: '#4b0082', 
   },
   textInput: {
-    backgroundColor: '#e0e0e0', // Cor de fundo para o textInput
-    color: '#000', // Texto preto para o textInput
+    backgroundColor: '#e0e0e0',
+    color: '#000', 
   },
   button: {
     backgroundColor: '#bb86fc',
@@ -76,31 +76,31 @@ const lightTheme = StyleSheet.create({
     textAlign: 'center',
   },
   userMessage: {
-    backgroundColor: '#DCF8C6', // Cor de fundo para as mensagens do usuário
+    backgroundColor: '#DCF8C6', 
   },
   otherMessage: {
-    backgroundColor: '#fff', // Cor de fundo para as mensagens de outros
+    backgroundColor: '#fff',
   },
   inputContainer: {
-    backgroundColor: '#fff', // Cor de fundo para o container de input
+    backgroundColor: '#fff', 
   },
   sendButton: {
-    backgroundColor: '#bb86fc', // Cor de fundo para o botão de enviar
+    backgroundColor: '#bb86fc', 
   },
   sendButtonText: {
-    color: '#fff', // Texto branco para o texto do botão de enviar
+    color: '#fff', 
   },
   profileImage: {
-    borderColor: '#ccc', // Cor da borda para a imagem de perfil
+    borderColor: '#ccc', 
   },
   footer: {
-    backgroundColor: '#f8f8f8', // Cor de fundo para o footer
+    backgroundColor: '#f8f8f8',
   },
   chatItem: {
-    backgroundColor: 'none', // Cor de fundo para o chatItem
+    backgroundColor: 'none', 
   },
   messageContainer: {
-    backgroundColor: 'none', // Cor de fundo para o messageContainer
+    backgroundColor: 'none', 
   },
   avatar: {
     width: 40,
@@ -134,70 +134,74 @@ const lightTheme = StyleSheet.create({
 
 const darkTheme = StyleSheet.create({
   container: {
-    backgroundColor: '#121212', // Cor de fundo roxo escuro
+    backgroundColor: '#121212',
   },
   header: {
-    backgroundColor: '#1f1f1f', // Cor de fundo roxo escuro para o header
+    backgroundColor: '#1f1f1f', 
   },
   headerText: {
-    color: '#bb86fc', // Roxo claro para o headerText
+    color: '#bb86fc', 
   },
   menuButtonText: {
-    color: '#bb86fc', // Roxo claro para o menuButtonText
+    color: '#bb86fc', 
   },
   info: {
-    backgroundColor: '#333', // Cor de fundo roxo escuro para o info
-    color: '#ccc', // Cinza claro para o info
+    backgroundColor: '#333', 
+    color: '#ccc', 
   },
   contact: {
-    color: '#bb86fc', // Roxo claro para o contact
+    color: '#bb86fc',
   },
   preview: {
-    color: '#bbb', // Cinza claro para o preview
+    color: '#bbb', 
   },
   date: {
-    color: '#888', // Cinza médio para o date
+    color: '#888', 
   },
   footerText: {
-    color: '#bb86fc', // Roxo claro para o footerText
+    color: '#bb86fc',
   },
   textInput: {
-    backgroundColor: '#333', // Cor de fundo roxo escuro para o textInput
-    color: '#ccc', // Texto cinza claro para o textInput
+    backgroundColor: '#333', 
+    color: '#ccc', 
   },
   button: {
-    backgroundColor: '#8C9EFF', // Cor de fundo roxo claro para o button
+    backgroundColor: '#4b0082', 
   },
   buttonText: {
-    color: '#fff', // Texto branco para o buttonText
+    color: '#fff',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
   },
   userMessage: {
-    backgroundColor: '#a1a1b4', // Cor de fundo roxo claro para as mensagens do usuário
+    backgroundColor: '#a1a1b4', 
   },
   otherMessage: {
-    backgroundColor: '#7f7fA0', // Cor de fundo roxo claro nas mensagens de outros
+    backgroundColor: '#7f7fA0', 
   },
   inputContainer: {
-    backgroundColor: '#1f1f1f', // Cor de fundo roxo escuro para o container de input
+    backgroundColor: '#1f1f1f',
   },
   sendButton: {
-    backgroundColor: '#4b0082', // Cor de fundo roxo claro para o botão de enviar
+    backgroundColor: '#4b0082', 
   },
   sendButtonText: {
-    color: '#fff', // Texto branco para o texto do botão de enviar
+    color: '#fff', 
   },
   profileImage: {
-    borderColor: '#555', // Cor da borda para a imagem de perfil
+    borderColor: '#555', 
   },
 
   footer: {
-    backgroundColor: '#1f1f1f', // Cor de fundo roxo escuro para o footer
+    backgroundColor: '#1f1f1f', 
   },
   chatItem: {
-    backgroundColor: 'none', // Cor de fundo para o chatItem
+    backgroundColor: 'none', 
   },
   messageContainer: {
-    backgroundColor: 'none', // Cor de fundo para o messageContainer
+    backgroundColor: 'none', 
   },
   
   avatar: {
