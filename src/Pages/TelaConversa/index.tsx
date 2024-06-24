@@ -4,8 +4,9 @@ import { useNavigation, useRoute, RouteProp, useFocusEffect } from '@react-navig
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
 import baseStyles from './style';
-import CustomButton from '../../Components/Botao/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Audio } from 'expo-av';
+import { useMessages } from '../../Components/Messages/MessageContext';
 
 type RootStackParamList = {
   StackTelaConversas: { chatId: string; chatName: string, phone: string, description: string };
@@ -15,6 +16,8 @@ type ChatMessage = {
   id: string;
   text: string;
   sender: 'user' | 'other';
+  type?: 'text' | 'audio';
+  audioUri?: string;
 };
 
 const TelaConversa = () => {
@@ -25,24 +28,45 @@ const TelaConversa = () => {
   const themeStyles = getThemeStyles(theme);
   const [wallpaper, setWallpaper] = useState<string | null>(null);
 
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { id: '1', text: 'Olá, como você está?', sender: 'other' },
-    { id: '2', text: 'Estou bem, obrigado!', sender: 'user' },
-  ]);
+  const { updateMessagePreview } = useMessages();
+
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
+  const [recording, setRecording] = useState<Audio.Recording | undefined>(undefined);
+  const [recordings, setRecordings] = useState<ChatMessage[]>([]);
 
   useFocusEffect(
     React.useCallback(() => {
       loadWallpaper();
+      loadMessages();
     }, [])
   );
 
   const loadWallpaper = async () => {
     try {
       const storedWallpaper = await AsyncStorage.getItem('wallpaper');
-      setWallpaper(storedWallpaper); // Atualiza o estado para null se não houver wallpaper
+      setWallpaper(storedWallpaper);
     } catch (error) {
       console.log('Failed to load wallpaper', error);
+    }
+  };
+
+  const loadMessages = async () => {
+    try {
+      const storedMessages = await AsyncStorage.getItem(`messages_${chatId}`);
+      if (storedMessages) {
+        setMessages(JSON.parse(storedMessages));
+      }
+    } catch (error) {
+      console.log('Failed to load messages', error);
+    }
+  };
+
+  const saveMessages = async (updatedMessages: ChatMessage[]) => {
+    try {
+      await AsyncStorage.setItem(`messages_${chatId}`, JSON.stringify(updatedMessages));
+    } catch (error) {
+      console.log('Failed to save messages', error);
     }
   };
 
@@ -52,53 +76,84 @@ const TelaConversa = () => {
         id: Math.random().toString(),
         text: newMessage,
         sender: 'user',
+        type: 'text'
       };
-      setMessages([...messages, newChatMessage]);
+      const updatedMessages = [...messages, newChatMessage];
+      setMessages(updatedMessages);
       setNewMessage('');
+      saveMessages(updatedMessages);
+      updateMessagePreview(chatId, newMessage);
     }
   };
 
   const renderMessage: ListRenderItem<ChatMessage> = ({ item }) => (
     <View style={item.sender === 'user' ? [baseStyles.userMessage, themeStyles.userMessage] : [baseStyles.otherMessage, themeStyles.otherMessage]}>
-      <Text>{item.text}</Text>
+      {item.type === 'text' ? (
+        <Text>{item.text}</Text>
+      ) : (
+        <TouchableOpacity onPress={() => playAudio(item.audioUri)}>
+          <MaterialCommunityIcons name="play" size={24} color={theme === 'dark' ? '#bb86fc' : '#4b0082'} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 
-  const handleGoBack = () => {
-    navigation.goBack();
-  };
+  async function startRecording() {
+    try {
+      const perm = await Audio.requestPermissionsAsync();
+      if (perm.status === 'granted') {
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: true,
+          playsInSilentModeIOS: true,
+        });
+        const { recording } = await Audio.Recording.createAsync(Audio.RecordingOptionsPresets.HIGH_QUALITY);
+        setRecording(recording);
+      }
+    } catch (err) {
+      console.error('Failed to start recording', err);
+    }
+  }
 
-  const handleMenuPress = () => {
-    navigation.navigate('StackConfiguracoes');
-  };
+  async function stopRecording() {
+    if (!recording) return;
+    
+    setRecording(undefined);
+    await recording.stopAndUnloadAsync();
+    const uri = recording.getURI();
 
-  const handleProfilePress = () => {
-    navigation.navigate('StackPerfil', {
-      name: chatName,
-      phone: phone,
-      description: description,
-    });
+    if (uri) {
+      const newAudioMessage: ChatMessage = {
+        id: Math.random().toString(),
+        sender: 'user',
+        type: 'audio',
+        audioUri: uri
+      };
+      const updatedMessages = [...messages, newAudioMessage];
+      setMessages(updatedMessages);
+      saveMessages(updatedMessages);
+      updateMessagePreview(chatId, 'Audio message');
+    }
+  }
+
+  const playAudio = async (uri?: string) => {
+    if (uri) {
+      const { sound } = await Audio.Sound.createAsync({ uri });
+      await sound.playAsync();
+    }
   };
 
   return (
     <View style={[baseStyles.container, themeStyles.container]}>
       {wallpaper && <Image source={{ uri: wallpaper }} style={baseStyles.wallpaper} />}
       <View style={[baseStyles.header, themeStyles.header]}>
-        <TouchableOpacity onPress={handleGoBack}>
+        <TouchableOpacity onPress={navigation.goBack}>
           <MaterialCommunityIcons style={themeStyles.seta} name="chevron-left" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleProfilePress} style={{
-          flexDirection: 'row',
-          marginRight: 70,
-          width: '66%',
-        }}>
-        <Image
-          source={require('../../Assets/zap1.png')}
-          style={themeStyles.avatar}
-        />
-        <Text style={[themeStyles.contactName, themeStyles.headerText]}>{chatName}</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('StackPerfil', { name: chatName, phone, description })} style={{ flexDirection: 'row', marginRight: 70, width: '66%' }}>
+          <Image source={require('../../Assets/zap1.png')} style={themeStyles.avatar} />
+          <Text style={[themeStyles.contactName, themeStyles.headerText]}>{chatName}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleMenuPress}>
+        <TouchableOpacity onPress={() => navigation.navigate('StackConfiguracoes')}>
           <MaterialCommunityIcons style={themeStyles.pontos} name="dots-vertical" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
       </View>
@@ -114,12 +169,12 @@ const TelaConversa = () => {
           value={newMessage}
           onChangeText={setNewMessage}
         />
-        <CustomButton
-          buttonStyle={[baseStyles.sendButton, themeStyles.sendButton]}
-          textStyle={themeStyles.sendButtonText}
-          title="Enviar"
-          onPress={handleSendMessage}
-        />
+        <TouchableOpacity onPress={recording ? stopRecording : startRecording} style={themeStyles.recordButton}>
+          <MaterialCommunityIcons name={recording ? "stop" : "microphone"} size={24} color={theme === 'dark' ? '#bb86fc' : '#4b0082'} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleSendMessage} style={[baseStyles.sendButton, themeStyles.sendButton]}>
+          <Text style={themeStyles.sendButtonText}>Enviar</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

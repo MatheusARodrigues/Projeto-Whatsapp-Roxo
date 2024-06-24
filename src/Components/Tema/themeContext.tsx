@@ -146,7 +146,15 @@ const lightTheme = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-  }
+  },
+  recordButton: {
+    backgroundColor: '#bb86fc',
+    borderRadius: 50,
+    padding: 10,
+  },
+  recordButtonText: {
+    color: '#fff',
+  },
 });
 
 const darkTheme = StyleSheet.create({
@@ -267,7 +275,15 @@ const darkTheme = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
-  }
+  },
+  recordButton: {
+    backgroundColor: '#4b0082',
+    borderRadius: 50,
+    padding: 10,
+  },
+  recordButtonText: {
+    color: '#fff',
+  },
 });
 
 export const getThemeStyles = (theme: Theme) => {
