@@ -7,6 +7,7 @@ import Configuracoes from "../Pages/Configuracoes";
 import TelaConversa from '../Pages/TelaConversa';
 import Arquivadas from '../Pages/Arquivadas';
 import { ThemeProvider } from '../Components/Tema/themeContext';
+import { Perfil } from '../Pages/Perfil';
 
 export type ParametrosDaRota = {
     StackLogin: { name: string };
@@ -14,6 +15,7 @@ export type ParametrosDaRota = {
     StackConfiguracoes: { name: string };
     StackTelaConversas: { name: string };
     Arquivadas: {name: string}; 
+    StackPerfil: {name: string}
 };
 
 const Stack = createNativeStackNavigator<ParametrosDaRota>();
@@ -28,6 +30,7 @@ export function StackRoutes() {
                 <Stack.Screen name="StackTelaConversas" component={TelaConversa} />
                 <Stack.Screen name='StackDrawerPages' component={DrawerTabsRoutes} />
                 <Stack.Screen name="Arquivadas" component={Arquivadas} />
+                <Stack.Screen name='StackPerfil' component={Perfil} />
             </Stack.Navigator>
         </NavigationContainer>
         </ThemeProvider>
