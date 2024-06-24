@@ -8,7 +8,7 @@ import CustomButton from '../../Components/Botao/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type RootStackParamList = {
-  StackTelaConversas: { chatId: string; chatName: string };
+  StackTelaConversas: { chatId: string; chatName: string, phone: string, description: string };
 };
 
 type ChatMessage = {
@@ -20,10 +20,11 @@ type ChatMessage = {
 const TelaConversa = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'StackTelaConversas'>>();
-  const { chatId, chatName } = route.params;
+  const { chatId, chatName, phone, description } = route.params;
   const { theme } = useTheme();
   const themeStyles = getThemeStyles(theme);
   const [wallpaper, setWallpaper] = useState<string | null>(null);
+  
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: '1', text: 'Olá, como você está?', sender: 'other' },
@@ -70,6 +71,14 @@ const TelaConversa = () => {
     navigation.navigate('StackConfiguracoes');
   };
 
+  const handleProfilePress = () => {
+    navigation.navigate('StackPerfil', {
+      name: chatName,
+      phone: phone,
+      description: description,
+    });
+  };
+
   return (
     <View style={[baseStyles.container, themeStyles.container]}>
       {wallpaper && <Image source={{ uri: wallpaper }} style={baseStyles.wallpaper} />}
@@ -77,11 +86,17 @@ const TelaConversa = () => {
         <TouchableOpacity onPress={handleGoBack}>
           <MaterialCommunityIcons style={themeStyles.seta} name="chevron-left" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
+        <TouchableOpacity onPress={handleProfilePress} style={{
+          flexDirection: 'row',
+          marginRight: 70,
+          width: '66%',
+        }}>
         <Image
           source={require('../../Assets/zap1.png')}
           style={themeStyles.avatar}
         />
         <Text style={[themeStyles.contactName, themeStyles.headerText]}>{chatName}</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleMenuPress}>
           <MaterialCommunityIcons style={themeStyles.pontos} name="dots-vertical" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>

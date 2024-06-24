@@ -7,13 +7,11 @@ export default StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     padding: 25,
     paddingTop: 40,
     position: 'relative', // Adicione para controlar a posição absoluta dos ícones
   },
-
-
   headerText: {
     fontSize: 20,
     textAlign: 'center',
