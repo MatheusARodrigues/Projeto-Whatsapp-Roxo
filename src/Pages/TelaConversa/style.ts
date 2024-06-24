@@ -49,5 +49,11 @@ export default StyleSheet.create({
     margin: 10,
     borderRadius: 5,
   },
+
+  wallpaper:{
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+  }
   
 });

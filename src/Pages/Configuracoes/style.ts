@@ -81,6 +81,10 @@ const styles = StyleSheet.create({
         height: 20,
         marginLeft: 10,
     },
+    wallpaper: {
+        width: 0,
+        height: 0,
+    },
 });
 
 export default styles;

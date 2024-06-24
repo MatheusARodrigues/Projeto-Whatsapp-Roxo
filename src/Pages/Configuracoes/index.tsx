@@ -10,12 +10,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Configuracoes = () => {
     const navigation = useNavigation();
     const { toggleTheme } = useTheme();
-    const [wallpaper, setWallpaper] = useState<string | null>(null);
     const [profileImage, setProfileImage] = useState<string>('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
     const [name, setName] = useState<string>('Usuário');
     const [recado, setRecado] = useState<string>('O justo é justo🏴‍☠️');
     const [isEditingName, setIsEditingName] = useState<boolean>(false);
     const [isEditingRecado, setIsEditingRecado] = useState<boolean>(false);
+    const [wallpaper, setWallpaper] = useState<string | null>(null);
 
     useEffect(() => {
         loadSettings();
@@ -42,7 +42,11 @@ const Configuracoes = () => {
             await AsyncStorage.setItem('name', name);
             await AsyncStorage.setItem('recado', recado);
             await AsyncStorage.setItem('profileImage', profileImage);
-            // await AsyncStorage.setItem('wallpaper', wallpaper);
+            if (wallpaper) {
+                await AsyncStorage.setItem('wallpaper', wallpaper);
+            } else {
+                await AsyncStorage.removeItem('wallpaper');
+            }
         } catch (error) {
             console.log('Failed to save settings', error);
         }
@@ -73,7 +77,8 @@ const Configuracoes = () => {
             [
                 {
                     text: "Remover",
-                    onPress: () => {
+                    onPress: async () => {
+                        await AsyncStorage.removeItem('wallpaper');
                         setWallpaper(null);
                         saveSettings();
                     },
@@ -92,8 +97,9 @@ const Configuracoes = () => {
                         let pickerResult = await ImagePicker.launchImageLibraryAsync();
 
                         if (!pickerResult.canceled) {
-                            setWallpaper(pickerResult.assets[0].uri);
-                            saveSettings();
+                            const uri = pickerResult.assets[0].uri;
+                            setWallpaper(uri);
+                            await AsyncStorage.setItem('wallpaper', uri);
                             console.log(pickerResult);
                         }
                     }
@@ -131,6 +137,7 @@ const Configuracoes = () => {
 
     return (
         <View style={styles.container}>
+            {wallpaper && <Image source={{ uri: wallpaper }} style={styles.wallpaper} />}
             <Text style={styles.header}>Configurações</Text>
             <View style={styles.messageContainer}>
                 <View style={styles.profileImageWrapper}>
@@ -168,7 +175,6 @@ const Configuracoes = () => {
                     </View>
                 </View>
             </View>
-            {wallpaper && <Image source={{ uri: wallpaper }} style={{ width: 300, height: 400, marginBottom: 20 }} />}
             <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Alterar Tema" onPress={handleThemeChange} />
             <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Alterar Wallpaper" onPress={handleWallpaperChange} />
             <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Voltar" onPress={() => navigation.goBack()} />
