@@ -114,13 +114,13 @@ const lightTheme = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
-    flex: 1,
     top: 10,
+    marginTop: 8,
   },
 
   seta: {
     fontSize: 40,
-    left: -10,
+    left: -15,
     top: 10,
     color: 'white', 
   },
