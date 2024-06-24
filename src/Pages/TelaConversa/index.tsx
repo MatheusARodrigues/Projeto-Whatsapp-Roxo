@@ -92,7 +92,7 @@ const TelaConversa = () => {
         <Text>{item.text}</Text>
       ) : (
         <TouchableOpacity onPress={() => playAudio(item.audioUri)}>
-          <MaterialCommunityIcons name="play" size={24} color={theme === 'dark' ? '#bb86fc' : '#4b0082'} />
+          <MaterialCommunityIcons name="play" size={24} color={theme === 'dark' ? '#4b0082' : '#935FB4'} />
         </TouchableOpacity>
       )}
     </View>
