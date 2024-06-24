@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, ListRenderItem, Image } from 'react-native';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
 import baseStyles from './style';
@@ -24,7 +24,6 @@ const TelaConversa = () => {
   const { theme } = useTheme();
   const themeStyles = getThemeStyles(theme);
   const [wallpaper, setWallpaper] = useState<string | null>(null);
-  
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: '1', text: 'Olá, como você está?', sender: 'other' },
@@ -32,9 +31,11 @@ const TelaConversa = () => {
   ]);
   const [newMessage, setNewMessage] = useState('');
 
-  useEffect(() => {
-    loadWallpaper();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      loadWallpaper();
+    }, [])
+  );
 
   const loadWallpaper = async () => {
     try {

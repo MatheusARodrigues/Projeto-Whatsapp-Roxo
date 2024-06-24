@@ -8,6 +8,7 @@ import TelaConversa from '../Pages/TelaConversa';
 import Arquivadas from '../Pages/Arquivadas';
 import { ThemeProvider } from '../Components/Tema/themeContext';
 import { Perfil } from '../Pages/Perfil';
+import { MessagesProvider } from '../Components/Messages/MessageContext';
 
 export type ParametrosDaRota = {
     StackLogin: { name: string };
@@ -22,6 +23,7 @@ const Stack = createNativeStackNavigator<ParametrosDaRota>();
 
 export function StackRoutes() {
     return (
+        <MessagesProvider>
         <ThemeProvider>
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='StackLogin'>
@@ -34,5 +36,6 @@ export function StackRoutes() {
             </Stack.Navigator>
         </NavigationContainer>
         </ThemeProvider>
+        </MessagesProvider>
     );
 };

@@ -70,7 +70,7 @@ const Configuracoes = () => {
         );
     };
 
-    const handleWallpaperChange = async () => {
+    const handleWallpaperChange = () => {
         Alert.alert(
             "Alterar Wallpaper",
             "Deseja mudar o wallpaper?",
@@ -78,9 +78,12 @@ const Configuracoes = () => {
                 {
                     text: "Remover",
                     onPress: async () => {
-                        await AsyncStorage.removeItem('wallpaper');
-                        setWallpaper(null);
-                        saveSettings();
+                        try {
+                            await AsyncStorage.removeItem('wallpaper');
+                            setWallpaper(null);
+                        } catch (error) {
+                            console.log('Failed to remove wallpaper', error);
+                        }
                     },
                     style: "destructive"
                 },
@@ -99,7 +102,11 @@ const Configuracoes = () => {
                         if (!pickerResult.canceled) {
                             const uri = pickerResult.assets[0].uri;
                             setWallpaper(uri);
-                            await AsyncStorage.setItem('wallpaper', uri);
+                            try {
+                                await AsyncStorage.setItem('wallpaper', uri);
+                            } catch (error) {
+                                console.log('Falha ao salvar', error);
+                            }
                             console.log(pickerResult);
                         }
                     }

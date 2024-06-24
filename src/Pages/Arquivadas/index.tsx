@@ -1,45 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, ListRenderItem } from 'react-native';
-import { useNavigation, NavigationProp, RouteProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
+import { useMessages } from '../../Components/Messages/MessageContext';
 import baseStyles from './style';
 
-type Message = {
-  id: string;
-  contact: string;
-  preview: string;
-  date: string;
-};
-
-type RootStackParamList = {
-  Home: { archivedMessages: Message[], unarchivedMessage?: Message };
-  Arquivadas: { archivedMessages: Message[] };
-  StackConfiguracoes: undefined;
-  StackTelaConversas: { chatId: string; chatName: string };
-};
-
-const Arquivadas = ({ route }: { route: RouteProp<RootStackParamList, 'Arquivadas'> }) => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+const Arquivadas = () => {
+  const navigation = useNavigation();
   const { theme } = useTheme();
   const themeStyles = getThemeStyles(theme);
-  const [archivedMessages, setArchivedMessages] = useState<Message[]>(route.params?.archivedMessages || []);
-
-  useEffect(() => {
-    if (route.params?.archivedMessages) {
-      setArchivedMessages(route.params.archivedMessages);
-    }
-  }, [route.params?.archivedMessages]);
+  const { archivedMessages, unarchiveMessage } = useMessages();
 
   const handleMenuPress = () => {
     navigation.navigate('StackConfiguracoes');
-  };
-
-  const handleUnarchive = (messageId: string) => {
-    const messageToUnarchive = archivedMessages.find((msg) => msg.id === messageId);
-    if (messageToUnarchive) {
-      setArchivedMessages((prevArchivedMessages) => prevArchivedMessages.filter((msg) => msg.id !== messageId));
-      navigation.navigate('Home', { archivedMessages: archivedMessages.filter((msg) => msg.id !== messageId), unarchivedMessage: messageToUnarchive });
-    }
   };
 
   const renderMessage: ListRenderItem<Message> = ({ item }) => (
@@ -55,7 +28,7 @@ const Arquivadas = ({ route }: { route: RouteProp<RootStackParamList, 'Arquivada
           <Text style={[baseStyles.date, themeStyles.date]}>{item.date}</Text>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleUnarchive(item.id)}>
+      <TouchableOpacity onPress={() => unarchiveMessage(item.id)}>
         <Image style={themeStyles.unarchiveButton} source={require('../../Assets/desarquivar.png')} />
       </TouchableOpacity>
     </View>
