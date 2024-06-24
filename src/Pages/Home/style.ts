@@ -1,98 +1,79 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ede7f6',
-    },
-
-    button: {
-        marginTop: 10,
-        height: 50,
-        width: '95%',
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#935FB4',
-        alignContent: 'center',
-        alignSelf: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        elevation: 5,
-    },
-
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: 10,
-        backgroundColor: '#4b0082',
-    },
-    headerText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
-    logo: {
-        width: 50,
-        height: 50,
-    },
-    menuButton: {
-        padding: 10,
-    },
-    menuButtonText: {
-        fontSize: 24,
-        color: '#fff',
-    },
-    messageContainer: {
-        flexDirection: 'row',
-        padding: 5,
-    },
-    image: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        marginRight: 10,
-    },
-    textContainer: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    contact: {
-        fontWeight: 'bold',
-        color: '#4b0082',
-    },
-    preview: {
-        color: '#555',
-    },
-    date: {
-        color: '#aaa',
-    },
-    footer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 10,
-        marginTop: 20,
-        borderTopWidth: 1,
-        borderTopColor: '#ccc',
-    },
-    lockIcon: {
-        width: 20,
-        height: 20,
-        marginRight: 10,
-    },
-    footerText: {
-        color: '#4b0082',
-    },
-
-    chatItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-    },
+export default StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+  logo: {
+    width: 50,
+    height: 50,
+  },
+  headerText: {
+    fontSize: 20,
+    flex: 1,
+    textAlign: 'center',
+  },
+  menuButton: {
+    padding: 10,
+  },
+  menuButtonText: {
+    fontSize: 20,
+  },
+  button: {
+    margin: 10,
+    padding: 10,
+    borderRadius: 5,
+  },
+  chatItem: {
+    flexDirection: 'row',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  messageContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  textContainer: {
+    marginLeft: 10,
+  },
+  contact: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  preview: {
+    fontSize: 14,
+    color: '#777',
+  },
+  date: {
+    fontSize: 12,
+    color: '#aaa',
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+  },
+  lockIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+  },
+  footerText: {
+    flex: 1,
+    fontSize: 12,
+    color: '#aaa',
+  },
 });
-
-export default styles;

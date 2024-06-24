@@ -72,12 +72,16 @@ const Configuracoes = () => {
             "Deseja mudar o wallpaper?",
             [
                 {
-                    text: "Não",
-                    onPress: () => console.log("Wallpaper mantido"),
-                    style: "cancel"
+                    text: "Remover",
+                    onPress: () => {
+                        setWallpaper(null);
+                        saveSettings();
+                    },
+                    style: "destructive"
                 },
                 {
-                    text: "Sim", onPress: async () => {
+                    text: "Selecionar",
+                    onPress: async () => {
                         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
                         if (permissionResult.granted === false) {

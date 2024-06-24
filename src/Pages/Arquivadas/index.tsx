@@ -2,13 +2,13 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, ListRenderItem } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
-import baseStyles from './style'; // Importe seus estilos base
+import baseStyles from './style';
 
 type Message = {
-    id: string;
-    contact: string;
-    preview: string;
-    date: string;
+  id: string;
+  contact: string;
+  preview: string;
+  date: string;
 };
 
 const messages = [
@@ -19,53 +19,59 @@ const messages = [
 ];
 
 type RootStackParamList = {
-    Arquivadas: undefined;
-    StackConfiguracoes: undefined;
+  Arquivadas: undefined;
+  StackConfiguracoes: undefined;
+  StackTelaConversas: { chatId: string; chatName: string };
 };
 
 const Arquivadas = () => {
-    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-    const { theme } = useTheme();
-    const themeStyles = getThemeStyles(theme);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const { theme } = useTheme();
+  const themeStyles = getThemeStyles(theme);
 
-    const handleMenuPress = () => {
-        navigation.navigate('StackConfiguracoes');
-    };
+  const handleMenuPress = () => {
+    navigation.navigate('StackConfiguracoes');
+  };
 
-    const renderMessage: ListRenderItem<Message> = ({ item }) => (
-        <View style={baseStyles.messageContainer}>
-            <Image style={baseStyles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
-            <View style={baseStyles.textContainer}>
-                <Text style={[baseStyles.contact, themeStyles.contact]}>{item.contact}</Text>
-                <Text style={[baseStyles.preview, themeStyles.preview]}>{item.preview}</Text>
-                <Text style={[baseStyles.date, themeStyles.date]}>{item.date}</Text>
-            </View>
+  const renderMessage: ListRenderItem<Message> = ({ item }) => (
+    <TouchableOpacity
+      style={[baseStyles.chatItem, themeStyles.chatItem]}
+      onPress={() => navigation.navigate('StackTelaConversas', { chatId: item.id, chatName: item.contact })}
+    >
+      <View style={[baseStyles.messageContainer, themeStyles.messageContainer]}>
+        <Image style={baseStyles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
+        <View style={baseStyles.textContainer}>
+          <Text style={[baseStyles.contact, themeStyles.contact]}>{item.contact}</Text>
+          <Text style={[baseStyles.preview, themeStyles.preview]}>{item.preview}</Text>
+          <Text style={[baseStyles.date, themeStyles.date]}>{item.date}</Text>
         </View>
-    );
+      </View>
+    </TouchableOpacity>
+  );
 
-    return (
-        <View style={[baseStyles.container, themeStyles.container]}>
-            <View style={[baseStyles.header, themeStyles.header]}>
-                <Image source={require('../../Assets/zap1.png')} style={baseStyles.logo} />
-                <Text style={[baseStyles.headerText, themeStyles.headerText]}>Arquivadas</Text>
-                <TouchableOpacity onPress={handleMenuPress} style={baseStyles.menuButton}>
-                    <Text style={[baseStyles.menuButtonText, themeStyles.menuButtonText]}>⋮</Text>
-                </TouchableOpacity>
-            </View>
-            <Text style={[baseStyles.info, themeStyles.info]}>Estas conversas permanecem arquivadas quando você recebe novas mensagens. Toque para mudar.</Text>
-            <FlatList
-                data={messages}
-                renderItem={renderMessage}
-                keyExtractor={item => item.id}
-            />
-            <View style={baseStyles.footer}>
-                <Image style={baseStyles.lockIcon} source={require('../../Assets/cadeado.png')} />
-                <Text style={[baseStyles.footerText, themeStyles.footerText]}>
-                    Suas mensagens pessoais são protegidas com a criptografia de ponta a ponta
-                </Text>
-            </View>
-        </View>
-    );
+  return (
+    <View style={[baseStyles.container, themeStyles.container]}>
+      <View style={[baseStyles.header, themeStyles.header]}>
+        <Image source={require('../../Assets/zap1.png')} style={baseStyles.logo} />
+        <Text style={[baseStyles.headerText, themeStyles.headerText]}>Arquivadas</Text>
+        <TouchableOpacity onPress={handleMenuPress} style={baseStyles.menuButton}>
+          <Text style={[baseStyles.menuButtonText, themeStyles.menuButtonText]}>⋮</Text>
+        </TouchableOpacity>
+      </View>
+      <Text style={[baseStyles.info, themeStyles.info]}>Estas conversas permanecem arquivadas quando você recebe novas mensagens. Toque para mudar.</Text>
+      <FlatList
+        data={messages}
+        renderItem={renderMessage}
+        keyExtractor={item => item.id}
+      />
+      <View style={[baseStyles.footer, themeStyles.footer]}>
+        <Image style={baseStyles.lockIcon} source={require('../../Assets/cadeado.png')} />
+        <Text style={[baseStyles.footerText, themeStyles.footerText]}>
+          Suas mensagens pessoais são protegidas com a criptografia de ponta a ponta
+        </Text>
+      </View>
+    </View>
+  );
 };
 
 export default Arquivadas;

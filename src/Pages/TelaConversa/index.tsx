@@ -1,82 +1,93 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Alert, StyleSheet, Text, FlatList, Image } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, Text, TextInput, TouchableOpacity, FlatList, ListRenderItem, Image } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import styles from './style';
-
-type Message = {
-  id: number;
-  text: string;
-};
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
+import baseStyles from './style';
+import CustomButton from '../../Components/Botao/CustomButton';
 
 type RootStackParamList = {
   StackTelaConversas: { chatId: string; chatName: string };
-  StackConfiguracoes: undefined;
 };
 
-const TelaConversa: React.FC = () => {
-  const [inputValue, setInputValue] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
+type ChatMessage = {
+  id: string;
+  text: string;
+  sender: 'user' | 'other';
+};
+
+const TelaConversa = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'StackTelaConversas'>>();
-  const { chatName } = route.params;
+  const { chatId, chatName } = route.params;
+  const { theme } = useTheme();
+  const themeStyles = getThemeStyles(theme);
 
-  const handleSend = () => {
-    if (inputValue.trim() === '') {
-      Alert.alert('Erro', 'Digite uma mensagem antes de enviar.');
-      return;
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { id: '1', text: 'Olá, como você está?', sender: 'other' },
+    { id: '2', text: 'Estou bem, obrigado!', sender: 'user' },
+  ]);
+  const [newMessage, setNewMessage] = useState('');
+
+  const handleSendMessage = () => {
+    if (newMessage.trim()) {
+      const newChatMessage: ChatMessage = {
+        id: Math.random().toString(),
+        text: newMessage,
+        sender: 'user',
+      };
+      setMessages([...messages, newChatMessage]);
+      setNewMessage('');
     }
-
-    const newMessage: Message = {
-      id: messages.length + 1,
-      text: inputValue,
-    };
-
-    setMessages([...messages, newMessage]);
-    setInputValue('');
   };
 
-  const renderMessage = ({ item }: { item: Message }) => (
-    <View style={styles.messageContainer}>
-      <Text style={styles.messageText}>{item.text}</Text>
+  const renderMessage: ListRenderItem<ChatMessage> = ({ item }) => (
+    <View style={item.sender === 'user' ? [baseStyles.userMessage, themeStyles.userMessage] : [baseStyles.otherMessage, themeStyles.otherMessage]}>
+      <Text style={themeStyles.messageText}>{item.text}</Text>
     </View>
   );
+
+  const handleGoBack = () => {
+    navigation.goBack();
+  };
 
   const handleMenuPress = () => {
     navigation.navigate('StackConfiguracoes');
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialCommunityIcons style={styles.seta} name="chevron-left" />
+    <View style={[baseStyles.container, themeStyles.container]}>
+      <View style={[baseStyles.header, themeStyles.header]}>
+        <TouchableOpacity onPress={handleGoBack}>
+          <MaterialCommunityIcons style={themeStyles.seta} name="chevron-left" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
         <Image
-          source={require('../../Assets/zap1.png')} 
-          style={styles.avatar}
+          source={require('../../Assets/zap1.png')}
+          style={themeStyles.avatar}
         />
+        <Text style={[themeStyles.contactName, themeStyles.headerText]}>{chatName}</Text>
         <TouchableOpacity onPress={handleMenuPress}>
-          <MaterialCommunityIcons style={styles.pontos} name="dots-vertical" />
+          <MaterialCommunityIcons style={themeStyles.pontos} name="dots-vertical" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
-        <Text style={styles.contactName}>{chatName}</Text>
       </View>
       <FlatList
         data={messages}
-        keyExtractor={(item) => item.id.toString()}
         renderItem={renderMessage}
-        style={styles.messageList}
+        keyExtractor={(item) => item.id}
       />
-      <View style={styles.inputContainer}>
+      <View style={[baseStyles.inputContainer, themeStyles.inputContainer]}>
         <TextInput
-          style={styles.input}
-          placeholder="Digite sua mensagem"
-          onChangeText={(text) => setInputValue(text)}
-          value={inputValue}
+          style={[baseStyles.textInput, themeStyles.textInput]}
+          placeholder="Digite uma mensagem"
+          value={newMessage}
+          onChangeText={setNewMessage}
         />
-        <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-          <Text style={styles.sendButtonText}>Enviar</Text>
-        </TouchableOpacity>
+        <CustomButton
+          buttonStyle={[baseStyles.sendButton, themeStyles.sendButton]}
+          textStyle={themeStyles.sendButtonText}
+          title="Enviar"
+          onPress={handleSendMessage}
+        />
       </View>
     </View>
   );

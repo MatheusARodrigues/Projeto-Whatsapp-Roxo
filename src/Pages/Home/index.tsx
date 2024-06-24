@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, ListRenderItem, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import styles from './style';
+import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
+import baseStyles from './style';
 import CustomButton from '../../Components/Botao/CustomButton';
 
 type Message = {
@@ -36,6 +37,8 @@ type RootStackParamList = {
 
 export function Home() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const { theme } = useTheme();
+  const themeStyles = getThemeStyles(theme);
   const [showButton, setShowButton] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -56,35 +59,36 @@ export function Home() {
     }
     setLastScrollY(currentScrollY);
   };
+
   const renderMessage: ListRenderItem<Message> = ({ item }) => (
     <TouchableOpacity
-      style={styles.chatItem}
+      style={[baseStyles.chatItem, themeStyles.chatItem]}
       onPress={() => navigation.navigate('StackTelaConversas', { chatId: item.id, chatName: item.contact })}
     >
-      <View style={styles.messageContainer}>
-        <Image style={styles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
-        <View style={styles.textContainer}>
-          <Text style={styles.contact}>{item.contact}</Text>
-          <Text style={styles.preview}>{item.preview}</Text>
-          <Text style={styles.date}>{item.date}</Text>
+      <View style={[baseStyles.messageContainer, themeStyles.messageContainer]}>
+        <Image style={baseStyles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
+        <View style={baseStyles.textContainer}>
+          <Text style={[baseStyles.contact, themeStyles.contact]}>{item.contact}</Text>
+          <Text style={[baseStyles.preview, themeStyles.preview]}>{item.preview}</Text>
+          <Text style={[baseStyles.date, themeStyles.date]}>{item.date}</Text>
         </View>
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image source={require('../../Assets/zap1.png')} style={styles.logo} />
-        <Text style={styles.headerText}>Home</Text>
-        <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
-          <Text style={styles.menuButtonText}>⋮</Text>
+    <View style={[baseStyles.container, themeStyles.container]}>
+      <View style={[baseStyles.header, themeStyles.header]}>
+        <Image source={require('../../Assets/zap1.png')} style={baseStyles.logo} />
+        <Text style={[baseStyles.headerText, themeStyles.headerText]}>Home</Text>
+        <TouchableOpacity onPress={handleMenuPress} style={baseStyles.menuButton}>
+          <Text style={[baseStyles.menuButtonText, themeStyles.menuButtonText]}>⋮</Text>
         </TouchableOpacity>
       </View>
       {showButton && (
         <CustomButton
-          buttonStyle={styles.button}
-          textStyle={{ color: 'black', fontSize: 18 }}
+          buttonStyle={[baseStyles.button, themeStyles.button]}
+          textStyle={themeStyles.buttonText}
           title="Arquivadas"
           onPress={handleArquivadas}
         />
@@ -95,11 +99,11 @@ export function Home() {
         keyExtractor={(item) => item.id}
         overScrollMode="never"
         onScroll={handleScroll}
-        scrollEventThrottle={100000} // Controla a frequência do evento de scroll
+        scrollEventThrottle={16}
       />
-      <View style={styles.footer}>
-        <Image style={styles.lockIcon} source={require('../../Assets/cadeado.png')} />
-        <Text style={styles.footerText}>
+      <View style={[baseStyles.footer, themeStyles.footer]}>
+        <Image style={baseStyles.lockIcon} source={require('../../Assets/cadeado.png')} />
+        <Text style={[baseStyles.footerText, themeStyles.footerText]}>
           Suas mensagens pessoais são protegidas com a criptografia de ponta a ponta
         </Text>
       </View>
