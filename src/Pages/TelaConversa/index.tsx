@@ -43,7 +43,7 @@ const TelaConversa = () => {
 
   const renderMessage: ListRenderItem<ChatMessage> = ({ item }) => (
     <View style={item.sender === 'user' ? [baseStyles.userMessage, themeStyles.userMessage] : [baseStyles.otherMessage, themeStyles.otherMessage]}>
-      <Text style={themeStyles.messageText}>{item.text}</Text>
+      <Text>{item.text}</Text>
     </View>
   );
 
