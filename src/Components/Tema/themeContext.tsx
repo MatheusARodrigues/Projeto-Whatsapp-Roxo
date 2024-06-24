@@ -130,6 +130,23 @@ const lightTheme = StyleSheet.create({
     top: 10,
     color: 'white', 
   },
+  archiveButton: {
+    width: 24,
+    height: 24,
+    marginLeft: 10,
+  },
+  unarchiveButton: {
+    width: 24,
+    height: 24,
+    marginLeft: 10,
+  },
+  archivedMessageInfo: {
+    backgroundColor: '#bb86fc',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  }
 });
 
 const darkTheme = StyleSheet.create({
@@ -234,6 +251,23 @@ const darkTheme = StyleSheet.create({
     top: 10,
     color: '#bb86fc', 
   },
+  archiveButton: {
+    width: 24,
+    height: 24,
+    marginLeft: 10,
+  },
+  unarchiveButton: {
+    width: 24,
+    height: 24,
+    marginLeft: 10,
+  },
+  archivedMessageInfo: {
+    backgroundColor: '#4b0082',
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+  }
 });
 
 export const getThemeStyles = (theme: Theme) => {

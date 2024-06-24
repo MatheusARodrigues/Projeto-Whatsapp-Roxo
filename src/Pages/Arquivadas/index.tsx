@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, FlatList, ListRenderItem } from 'react-native';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { useNavigation, NavigationProp, RouteProp } from '@react-navigation/native';
 import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
 import baseStyles from './style';
 
@@ -11,42 +11,54 @@ type Message = {
   date: string;
 };
 
-const messages = [
-    { id: '1', contact: '+55 24 99324-0212', preview: 'abraço', date: '14/06/2024' },
-    { id: '2', contact: 'Aula 2024', preview: 'Foto', date: '13/06/2024' },
-    { id: '3', contact: ':)', preview: 'Você bloqueou esse contato', date: '' },
-    { id: '4', contact: '+55 18 8839-1213', preview: 'Áudio', date: '17/05/2020' },
-];
-
 type RootStackParamList = {
-  Arquivadas: undefined;
+  Home: { archivedMessages: Message[], unarchivedMessage?: Message };
+  Arquivadas: { archivedMessages: Message[] };
   StackConfiguracoes: undefined;
   StackTelaConversas: { chatId: string; chatName: string };
 };
 
-const Arquivadas = () => {
+const Arquivadas = ({ route }: { route: RouteProp<RootStackParamList, 'Arquivadas'> }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { theme } = useTheme();
   const themeStyles = getThemeStyles(theme);
+  const [archivedMessages, setArchivedMessages] = useState<Message[]>(route.params?.archivedMessages || []);
+
+  useEffect(() => {
+    if (route.params?.archivedMessages) {
+      setArchivedMessages(route.params.archivedMessages);
+    }
+  }, [route.params?.archivedMessages]);
 
   const handleMenuPress = () => {
     navigation.navigate('StackConfiguracoes');
   };
 
+  const handleUnarchive = (messageId: string) => {
+    const messageToUnarchive = archivedMessages.find((msg) => msg.id === messageId);
+    if (messageToUnarchive) {
+      setArchivedMessages((prevArchivedMessages) => prevArchivedMessages.filter((msg) => msg.id !== messageId));
+      navigation.navigate('Home', { archivedMessages: archivedMessages.filter((msg) => msg.id !== messageId), unarchivedMessage: messageToUnarchive });
+    }
+  };
+
   const renderMessage: ListRenderItem<Message> = ({ item }) => (
-    <TouchableOpacity
-      style={[baseStyles.chatItem, themeStyles.chatItem]}
-      onPress={() => navigation.navigate('StackTelaConversas', { chatId: item.id, chatName: item.contact })}
-    >
-      <View style={[baseStyles.messageContainer, themeStyles.messageContainer]}>
+    <View style={[baseStyles.chatItem, themeStyles.chatItem]}>
+      <TouchableOpacity
+        style={[baseStyles.messageContainer, themeStyles.messageContainer]}
+        onPress={() => navigation.navigate('StackTelaConversas', { chatId: item.id, chatName: item.contact })}
+      >
         <Image style={baseStyles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
         <View style={baseStyles.textContainer}>
           <Text style={[baseStyles.contact, themeStyles.contact]}>{item.contact}</Text>
           <Text style={[baseStyles.preview, themeStyles.preview]}>{item.preview}</Text>
           <Text style={[baseStyles.date, themeStyles.date]}>{item.date}</Text>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => handleUnarchive(item.id)}>
+        <Image style={themeStyles.unarchiveButton} source={require('../../Assets/desarquivar.png')} />
+      </TouchableOpacity>
+    </View>
   );
 
   return (
@@ -58,11 +70,13 @@ const Arquivadas = () => {
           <Text style={[baseStyles.menuButtonText, themeStyles.menuButtonText]}>⋮</Text>
         </TouchableOpacity>
       </View>
-      <Text style={[baseStyles.info, themeStyles.info]}>Estas conversas permanecem arquivadas quando você recebe novas mensagens. Toque para mudar.</Text>
+      <Text style={themeStyles.archivedMessageInfo}>
+        Estas conversas permanecem arquivadas quando você recebe novas mensagens. Toque para mudar.
+      </Text>
       <FlatList
-        data={messages}
+        data={archivedMessages}
         renderItem={renderMessage}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
       />
       <View style={[baseStyles.footer, themeStyles.footer]}>
         <Image style={baseStyles.lockIcon} source={require('../../Assets/cadeado.png')} />
