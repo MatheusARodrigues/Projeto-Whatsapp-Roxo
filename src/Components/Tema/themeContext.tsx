@@ -125,7 +125,7 @@ const lightTheme = StyleSheet.create({
     color: 'white', 
   },
   pontos: {
-    fontSize: 25,
+    fontSize: 30,
     right: 10,
     top: 10,
     color: 'white', 
@@ -229,7 +229,7 @@ const darkTheme = StyleSheet.create({
   },
 
   pontos: {
-    fontSize: 25,
+    fontSize: 30,
     right: 10,
     top: 10,
     color: '#bb86fc', 
