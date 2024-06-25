@@ -1,17 +1,22 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { styles } from './style';
-import { useMessages } from '../../Components/Messages/MessageContext';
+import React from "react";
+import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { styles } from "./style";
+import { useMessages } from "../../Components/Messages/MessageContext";
 
 type RootStackParamList = {
-  StackPerfil: { name: string; phone: string; description: string; imageUri: string };
+  StackPerfil: {
+    name: string;
+    phone: string;
+    description: string;
+    imageUri: string;
+  };
 };
 
-type PerfilRouteProp = RouteProp<RootStackParamList, 'StackPerfil'>;
+type PerfilRouteProp = RouteProp<RootStackParamList, "StackPerfil">;
 
-export function Perfil(){
+export function Perfil() {
   const route = useRoute<PerfilRouteProp>();
   const { name, phone, description, imageUri } = route.params;
   const navigation = useNavigation();
@@ -22,9 +27,14 @@ export function Perfil(){
       <View style={styles.profileContainer}>
         <View style={styles.profileLeave}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons name="chevron-left" size={35}/>
+            <MaterialCommunityIcons name="chevron-left" size={35} />
           </TouchableOpacity>
-          <Image source={{ uri: getAvatarImage(phone) || 'https://via.placeholder.com/50' }} style={styles.profileImage} />
+          <Image
+            source={{
+              uri: getAvatarImage(phone) || "https://via.placeholder.com/50",
+            }}
+            style={styles.profileImage}
+          />
         </View>
         <Text style={styles.profileName}>{name}</Text>
         <Text style={styles.profilePhone}>{phone}</Text>
@@ -47,10 +57,16 @@ export function Perfil(){
 
       <View style={styles.sectionContainerBlock}>
         <TouchableOpacity style={[styles.actionButton, styles.blockButton]}>
-          <Text style={[styles.actionButtonText, styles.blockButtonText]}>Bloquear {name}</Text>
+          <MaterialCommunityIcons name="block-helper" size={22} color={"red"} />
+          <Text style={[styles.actionButtonText, styles.blockButtonText]}>
+            Bloquear {name}
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.actionButton, styles.reportButton]}>
-          <Text style={[styles.actionButtonText, styles.reportButtonText]}>Denunciar {name}</Text>
+          <MaterialCommunityIcons name="alert" size={22} color={"red"} />
+          <Text style={[styles.actionButtonText, styles.reportButtonText]}>
+            Denunciar {name}
+          </Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
