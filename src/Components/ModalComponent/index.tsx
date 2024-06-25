@@ -19,7 +19,7 @@ export function ModalComponent() {
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => setModalAberto(modalAberto)}
+            onPress={() => setModalAberto(!modalAberto)}
           >
             <Text style={styles.titleButton}>
               Fechar
