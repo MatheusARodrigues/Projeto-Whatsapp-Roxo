@@ -40,16 +40,6 @@ const Arquivadas = () => {
 
   return (
     <View style={[baseStyles.container, themeStyles.container]}>
-      <View style={[baseStyles.header, themeStyles.header]}>
-        <Image source={require('../../Assets/zap1.png')} style={baseStyles.logo} />
-        <Text style={[baseStyles.headerText, themeStyles.headerText]}>Arquivadas</Text>
-        <TouchableOpacity onPress={handleMenuPress} style={baseStyles.menuButton}>
-          <Text style={[baseStyles.menuButtonText, themeStyles.menuButtonText]}>⋮</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={themeStyles.archivedMessageInfo}>
-        Estas conversas permanecem arquivadas quando você recebe novas mensagens. Toque para mudar.
-      </Text>
       <FlatList
         data={archivedMessages}
         renderItem={renderMessage}

@@ -60,21 +60,6 @@ export function Home() {
 
   return (
     <View style={[baseStyles.container, themeStyles.container]}>
-      <View style={[baseStyles.header, themeStyles.header]}>
-        <Image source={require('../../Assets/zap1.png')} style={baseStyles.logo} />
-        <Text style={[baseStyles.headerText, themeStyles.headerText]}>Home</Text>
-        <TouchableOpacity onPress={handleMenuPress} style={baseStyles.menuButton}>
-          <Text style={[baseStyles.menuButtonText, themeStyles.menuButtonText]}>⋮</Text>
-        </TouchableOpacity>
-      </View>
-      {showButton && (
-        <CustomButton
-          buttonStyle={[baseStyles.button, themeStyles.button]}
-          textStyle={themeStyles.buttonText}
-          title="Arquivadas"
-          onPress={handleArquivadas}
-        />
-      )}
       <FlatList
         data={messages}
         renderItem={renderMessage}
