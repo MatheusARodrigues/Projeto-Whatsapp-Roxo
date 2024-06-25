@@ -1,28 +1,30 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './style';
+import { useMessages } from '../../Components/Messages/MessageContext';
 
 type RootStackParamList = {
-  StackPerfil: { name: string; phone: string; description: string };
+  StackPerfil: { name: string; phone: string; description: string; imageUri: string };
 };
 
 type PerfilRouteProp = RouteProp<RootStackParamList, 'StackPerfil'>;
 
 export function Perfil(){
   const route = useRoute<PerfilRouteProp>();
-  const { name, phone, description } = route.params;
+  const { name, phone, description, imageUri } = route.params;
   const navigation = useNavigation();
+  const { updateMessagePreview, getAvatarImage } = useMessages();
 
   return (
     <ScrollView contentContainerStyle={styles.container} overScrollMode="never">
       <View style={styles.profileContainer}>
         <View style={styles.profileLeave}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialCommunityIcons name="chevron-left" size={35}/>
-        </TouchableOpacity>
-        <Image source={{ uri: 'https://via.placeholder.com/100' }} style={styles.profileImage} />
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <MaterialCommunityIcons name="chevron-left" size={35}/>
+          </TouchableOpacity>
+          <Image source={{ uri: getAvatarImage(phone) || 'https://via.placeholder.com/50' }} style={styles.profileImage} />
         </View>
         <Text style={styles.profileName}>{name}</Text>
         <Text style={styles.profilePhone}>{phone}</Text>
@@ -53,4 +55,4 @@ export function Perfil(){
       </View>
     </ScrollView>
   );
-};
+}

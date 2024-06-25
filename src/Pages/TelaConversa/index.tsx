@@ -28,7 +28,7 @@ const TelaConversa = () => {
   const themeStyles = getThemeStyles(theme);
   const [wallpaper, setWallpaper] = useState<string | null>(null);
 
-  const { updateMessagePreview } = useMessages();
+  const { updateMessagePreview, getAvatarImage } = useMessages();
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
@@ -150,10 +150,10 @@ const TelaConversa = () => {
           <MaterialCommunityIcons style={themeStyles.seta} name="chevron-left" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('StackPerfil', { name: chatName, phone, description })} style={{ flexDirection: 'row', marginRight: 70, width: '66%' }}>
-          <Image source={require('../../Assets/zap1.png')} style={themeStyles.avatar} />
+          <Image style={themeStyles.avatar} source={{ uri: getAvatarImage(phone) || 'https://via.placeholder.com/50' }} />
           <Text style={[themeStyles.contactName, themeStyles.headerText]}>{chatName}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('StackConfiguracoes')}>
+	<TouchableOpacity onPress={() => navigation.navigate('StackConfiguracoes')}>
           <MaterialCommunityIcons style={themeStyles.pontos} name="dots-vertical" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
       </View>
@@ -165,7 +165,8 @@ const TelaConversa = () => {
       <View style={[baseStyles.inputContainer, themeStyles.inputContainer]}>
         <TextInput
           style={[baseStyles.textInput, themeStyles.textInput]}
-          placeholder="Digite uma mensagem"
+          placeholder="Digite sua mensagem..."
+          placeholderTextColor={theme === 'dark' ? '#f0f0f0' : '#888'}
           value={newMessage}
           onChangeText={setNewMessage}
         />

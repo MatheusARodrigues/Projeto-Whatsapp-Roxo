@@ -9,30 +9,34 @@ const Arquivadas = () => {
   const navigation = useNavigation();
   const { theme } = useTheme();
   const themeStyles = getThemeStyles(theme);
-  const { archivedMessages, unarchiveMessage } = useMessages();
+  const { archivedMessages, unarchiveMessage, getAvatarImage } = useMessages();
 
   const handleMenuPress = () => {
     navigation.navigate('StackConfiguracoes');
   };
 
-  const renderMessage: ListRenderItem<Message> = ({ item }) => (
-    <View style={[baseStyles.chatItem, themeStyles.chatItem]}>
-      <TouchableOpacity
-        style={[baseStyles.messageContainer, themeStyles.messageContainer]}
-        onPress={() => navigation.navigate('StackTelaConversas', { chatId: item.id, chatName: item.contact })}
-      >
-        <Image style={baseStyles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
-        <View style={baseStyles.textContainer}>
-          <Text style={[baseStyles.contact, themeStyles.contact]}>{item.contact}</Text>
-          <Text style={[baseStyles.preview, themeStyles.preview]}>{item.preview}</Text>
-          <Text style={[baseStyles.date, themeStyles.date]}>{item.date}</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => unarchiveMessage(item.id)}>
-        <Image style={themeStyles.unarchiveButton} source={require('../../Assets/desarquivar.png')} />
-      </TouchableOpacity>
-    </View>
-  );
+  const renderMessage: ListRenderItem<Message> = ({ item }) => {
+    const avatarUrl = getAvatarImage(item.phone);
+
+    return (
+      <View style={[baseStyles.chatItem, themeStyles.chatItem]}>
+        <TouchableOpacity
+          style={[baseStyles.messageContainer, themeStyles.messageContainer]}
+          onPress={() => navigation.navigate('StackTelaConversas', { chatId: item.id, chatName: item.contact, phone: item.phone, description: item.description, imageUri: avatarUrl })}
+        >
+          <Image style={baseStyles.image} source={{ uri: avatarUrl || 'https://via.placeholder.com/50' }} />
+          <View style={baseStyles.textContainer}>
+            <Text style={[baseStyles.contact, themeStyles.contact]}>{item.contact}</Text>
+            <Text style={[baseStyles.preview, themeStyles.preview]}>{item.preview}</Text>
+            <Text style={[baseStyles.date, themeStyles.date]}>{item.date}</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => unarchiveMessage(item.id)}>
+          <Image style={themeStyles.unarchiveButton} source={require('../../Assets/desarquivar.png')} />
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <View style={[baseStyles.container, themeStyles.container]}>

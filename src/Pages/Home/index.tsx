@@ -17,7 +17,7 @@ export function Home() {
 
   useEffect(() => {
     if (isFocused) {
-      
+
     }
   }, [isFocused]);
 
