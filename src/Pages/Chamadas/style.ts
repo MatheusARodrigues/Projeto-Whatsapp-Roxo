@@ -7,10 +7,14 @@ const styles = StyleSheet.create({
   },
 
   subtitle: {
-    marginLeft: 10,
+    fontSize: 30,
     fontWeight: 'bold',
-    fontSize: 20,
     color: '#bb86fc',
+    marginBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#1DB499',
+    marginLeft: 20,
+    marginTop: 20,
   },
 
   callItem: {
