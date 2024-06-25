@@ -10,6 +10,8 @@ export type TiposDeInformacoes = {
   loginAutentication: (phoneNumber: string, password: string) => void;
   modalAberto: boolean;
   setModalAberto: (value: boolean) => void;
+  modalOpen: boolean;
+  setModalOpen: (value: boolean) => void;
 };
 
 const RemetenteDeInformacoes = createContext<TiposDeInformacoes>({
@@ -20,6 +22,8 @@ const RemetenteDeInformacoes = createContext<TiposDeInformacoes>({
   loginAutentication: () => {},
   modalAberto: false,
   setModalAberto: () => {},
+  modalOpen: false,
+  setModalOpen: () => {},
 });
 
 export const AuthProvider = ({ children }: any) => {
@@ -29,6 +33,7 @@ export const AuthProvider = ({ children }: any) => {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [modalAberto, setModalAberto] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const loginAutentication = (phoneNumber: string, password: string) => {
     
@@ -74,7 +79,8 @@ export const AuthProvider = ({ children }: any) => {
         phoneNumber, setPhoneNumber,
         password, setPassword,
         loginAutentication,
-        modalAberto, setModalAberto
+        modalAberto, setModalAberto,
+        modalOpen, setModalOpen,
       }}>
       {children}
     </RemetenteDeInformacoes.Provider>

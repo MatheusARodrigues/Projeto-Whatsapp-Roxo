@@ -7,6 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './style';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
+import { useAuth } from '../../Hooks/useAuth';
 
 const Configuracoes = () => {
     const navigation = useNavigation();
@@ -18,6 +19,7 @@ const Configuracoes = () => {
     const [isEditingName, setIsEditingName] = useState<boolean>(false);
     const [isEditingRecado, setIsEditingRecado] = useState<boolean>(false);
     const [wallpaper, setWallpaper] = useState<string | null>(null);
+    const {modalOpen, setModalOpen} = useAuth();
 
     useEffect(() => {
         loadSettings();
@@ -216,7 +218,7 @@ const Configuracoes = () => {
             </View>
             <CustomButton buttonStyle={themeStyles.buttonConfig} textStyle={themeStyles.buttonText} title="Alterar Tema" onPress={handleThemeChange} />
             <CustomButton buttonStyle={ themeStyles.buttonConfig} textStyle={themeStyles.buttonText} title="Alterar Wallpaper" onPress={handleWallpaperChange} />
-            <CustomButton buttonStyle={ themeStyles.buttonConfig} textStyle={themeStyles.buttonText} title="Voltar" onPress={() => navigation.goBack()} />
+            <CustomButton buttonStyle={ themeStyles.buttonConfig} textStyle={themeStyles.buttonText} title="Voltar" onPress={() => setModalOpen(!modalOpen)} />
         </View>
     );
 };
