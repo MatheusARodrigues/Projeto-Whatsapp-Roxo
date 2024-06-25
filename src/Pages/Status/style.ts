@@ -7,14 +7,18 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
   title: {
-    fontSize: 34,
-    color: '#4a148c',
-    marginTop: 10,
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#bb86fc',
+    marginBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#1DB499',
     marginLeft: 5,
-    textAlign: "left",
+    marginTop: 20,
   },
 
   subtitle: {
+    fontWeight: 'bold',
     fontSize: 20,
     color: '#4a148c',
     marginTop: 20,
@@ -117,6 +121,17 @@ export const styles = StyleSheet.create({
     marginLeft: 5,
     marginTop: 5,
     marginRight: 8
+  },
+
+  searchBar: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    marginLeft: 5,
+    marginRight: 5,
   },
   
 });

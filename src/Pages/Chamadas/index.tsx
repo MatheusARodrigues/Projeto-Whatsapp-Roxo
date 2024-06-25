@@ -17,14 +17,14 @@ const chamadas: ChamadasProps[] = [
     id: "1",
     nome: "Erick F",
     foto: "https://randomuser.me/api/portraits/men/1.jpg",
-    hora: "Today, 10:00 AM",
+    hora: "Today, 17:06",
     tipo: "recebida",
   },
   {
     id: "2",
     nome: "Erica F",
     foto: "https://randomuser.me/api/portraits/women/1.jpg",
-    hora: "Yesterday, 5:00 PM",
+    hora: "Ontem, 14:35",
     tipo: "feita",
   },
 ];
@@ -49,6 +49,7 @@ export function Chamadas() {
 
   return (
     <View style={styles.container}>
+        <Text style={styles.subtitle}>Recentes</Text>
       <FlatList
         data={chamadas}
         keyExtractor={(item) => item.id}

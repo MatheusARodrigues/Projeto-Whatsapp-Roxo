@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TextInput, Image } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import  AvatarPerfil  from '../../Assets/avatar-default.png'; 
@@ -10,6 +10,7 @@ export function Status() {
   // const [data, setData] = useState([]);    
   // const navigation = useNavigation();
   // const isFocused = useIsFocused();
+  const [searchText, setSearchText] = useState('');
 
   const atualizacoes = [
     {
@@ -44,9 +45,21 @@ export function Status() {
     },
   ];
 
+
+  const filteredAtualizacoes = atualizacoes.filter(item =>
+    item.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Atualizações</Text>
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Pesquisar status"
+        value={searchText}
+        onChangeText={setSearchText}
+      />
       <Text style={styles.subtitle}>Status</Text>
       <View style={styles.divider} />
       <View style={styles.StatusContainer}>
