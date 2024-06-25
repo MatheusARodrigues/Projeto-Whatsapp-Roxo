@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, ListRenderItem, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, FlatList, ListRenderItem, Image, Alert } from 'react-native';
 import { useNavigation, useRoute, RouteProp, useFocusEffect } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
@@ -7,9 +7,10 @@ import baseStyles from './style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
 import { useMessages } from '../../Components/Messages/MessageContext';
+import axios from 'axios';
 
 type RootStackParamList = {
-  StackTelaConversas: { chatId: string; chatName: string, phone: string, description: string };
+  StackTelaConversas: { chatId: string; chatName: string, phone: string };
 };
 
 type ChatMessage = {
@@ -20,13 +21,21 @@ type ChatMessage = {
   audioUri?: string;
 };
 
+type User = {
+  id: string;
+  contact: string;
+  phone: string;
+  description: string;
+};
+
 const TelaConversa = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'StackTelaConversas'>>();
-  const { chatId, chatName, phone, description } = route.params;
+  const { chatId, chatName, phone } = route.params;
   const { theme } = useTheme();
   const themeStyles = getThemeStyles(theme);
   const [wallpaper, setWallpaper] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const { updateMessagePreview, getAvatarImage } = useMessages();
 
@@ -41,6 +50,22 @@ const TelaConversa = () => {
       loadMessages();
     }, [])
   );
+
+  useEffect(() => {
+    axios.get('https://6678658a0bd45250561e8a0a.mockapi.io/Wpp')
+    .then(response => {
+      const foundUser = response.data.find((u: User) => u.phone === phone );
+      if (foundUser) {
+        setUser(foundUser);
+      } else {
+        Alert.alert('Erro', 'Usuário não encontrado.');
+      }
+    })
+    .catch(error => {
+      console.error('Erro ao buscar dados do usuário:', error);
+      Alert.alert('Erro', 'Erro ao buscar dados do usuário.');
+    });
+  }, [phone]);
 
   const loadWallpaper = async () => {
     try {
@@ -149,7 +174,7 @@ const TelaConversa = () => {
         <TouchableOpacity onPress={navigation.goBack}>
           <MaterialCommunityIcons style={themeStyles.seta} name="chevron-left" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('StackPerfil', { name: chatName, phone, description })} style={{ flexDirection: 'row', marginRight: 70, width: '66%' }}>
+        <TouchableOpacity onPress={() => navigation.navigate('StackPerfil', { name: user.contact, phone: user.phone, description: user.description })} style={{ flexDirection: 'row', marginRight: 70, width: '66%' }}>
           <Image style={themeStyles.avatar} source={{ uri: getAvatarImage(phone) || 'https://via.placeholder.com/50' }} />
           <Text style={[themeStyles.contactName, themeStyles.headerText]}>{chatName}</Text>
         </TouchableOpacity>
