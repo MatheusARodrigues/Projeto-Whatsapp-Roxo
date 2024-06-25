@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 type Message = {
@@ -10,13 +11,22 @@ type Message = {
   imageUri: string;
 };
 
+type User = {
+  id: string;
+  contact: string;
+  phone: string;
+  description: string;
+};
+
 type MessagesContextType = {
   messages: Message[];
   archivedMessages: Message[];
+  currentUser: User | null;
   archiveMessage: (messageId: string) => void;
   unarchiveMessage: (messageId: string) => void;
   updateMessagePreview: (messageId: string, newPreview: string) => void;
   getAvatarImage: (phone: string) => string | undefined;
+  fetchUserByPhone: (phone: string) => Promise<void>;
 };
 
 const initialMessages: Message[] = [
@@ -31,10 +41,12 @@ const initialMessages: Message[] = [
 const MessagesContext = createContext<MessagesContextType>({
   messages: initialMessages,
   archivedMessages: [],
+  currentUser: null,
   archiveMessage: () => {},
   unarchiveMessage: () => {},
   updateMessagePreview: () => {},
   getAvatarImage: () => undefined,
+  fetchUserByPhone: async () => {},
 });
 
 export const useMessages = () => {
@@ -48,6 +60,7 @@ type MessagesProviderProps = {
 export const MessagesProvider: React.FC<MessagesProviderProps> = ({ children }) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [archivedMessages, setArchivedMessages] = useState<Message[]>([]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   
   const archiveMessage = (messageId: string) => {
@@ -79,8 +92,22 @@ export const MessagesProvider: React.FC<MessagesProviderProps> = ({ children }) 
     return message ? message.imageUri : undefined;
   };
 
+  const fetchUserByPhone = async (phone: string): Promise<void> => {
+    try {
+      const response = await axios.get('https://6678658a0bd45250561e8a0a.mockapi.io/Wpp');
+      const foundUser = response.data.find((u: User) => u.phone === phone);
+      if (foundUser) {
+        setCurrentUser(foundUser);
+      } else {
+        setCurrentUser(null);
+      }
+    } catch (error) {
+      setCurrentUser(null);
+    }
+  };
+
   return (
-    <MessagesContext.Provider value={{ messages, archivedMessages, archiveMessage, unarchiveMessage, updateMessagePreview, getAvatarImage }}>
+    <MessagesContext.Provider value={{ messages, archivedMessages, currentUser, archiveMessage, unarchiveMessage, updateMessagePreview, getAvatarImage, fetchUserByPhone }}>
       {children}
     </MessagesContext.Provider>
   );
