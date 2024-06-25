@@ -6,9 +6,8 @@ import { DrawerTabsRoutes } from './DrawerTabsRoutes';
 import Configuracoes from "../Pages/Configuracoes";
 import TelaConversa from '../Pages/TelaConversa';
 import Arquivadas from '../Pages/Arquivadas';
+import { AuthProvider  } from '../Hooks/useAuth';
 import { ThemeProvider } from '../Components/Tema/themeContext';
-import { Perfil } from '../Pages/Perfil';
-import { MessagesProvider } from '../Components/Messages/MessageContext';
 
 export type ParametrosDaRota = {
     StackLogin: { name: string };
@@ -16,26 +15,24 @@ export type ParametrosDaRota = {
     StackConfiguracoes: { name: string };
     StackTelaConversas: { name: string };
     Arquivadas: {name: string}; 
-    StackPerfil: {name: string}
 };
 
 const Stack = createNativeStackNavigator<ParametrosDaRota>();
 
 export function StackRoutes() {
     return (
-        <MessagesProvider>
         <ThemeProvider>
-        <NavigationContainer>
+            <NavigationContainer>
+            <AuthProvider>
             <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='StackLogin'>
-                <Stack.Screen name='StackLogin' component={Login} />
-                <Stack.Screen name="StackConfiguracoes" component={Configuracoes} />
+                <Stack.Screen name= "StackLogin" component={Login} />
+                <Stack.Screen name= "StackConfiguracoes" component={Configuracoes} />
                 <Stack.Screen name="StackTelaConversas" component={TelaConversa} />
-                <Stack.Screen name='StackDrawerPages' component={DrawerTabsRoutes} />
-                <Stack.Screen name="Arquivadas" component={Arquivadas} />
-                <Stack.Screen name='StackPerfil' component={Perfil} />
+                <Stack.Screen name="StackDrawerPages" component={DrawerTabsRoutes} />
+                <Stack.Screen name="Arquivadas" component={Arquivadas} />    
             </Stack.Navigator>
+            </AuthProvider>
         </NavigationContainer>
         </ThemeProvider>
-        </MessagesProvider>
     );
 };

@@ -5,12 +5,15 @@ import React from "react";
 import Status from "../Pages/Status";
 import { Chamadas } from "../Pages/Chamadas";
 import Arquivadas from "../Pages/Arquivadas";
-
+import { useAuth } from '../Hooks/useAuth';
 
 
 const Drawer = createDrawerNavigator();
 
 export function DrawerTabsRoutes(){
+    
+    const {phoneNumber} = useAuth();
+
     return (
         <Drawer.Navigator>
             <Drawer.Screen name="Home" component={Home}/>
