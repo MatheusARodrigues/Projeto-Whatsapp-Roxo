@@ -18,6 +18,11 @@ export default StyleSheet.create({
     color: 'white',
     flex: 1,
   },
+  contactProfile: {
+    flexDirection: 'row',
+    marginRight: 70,
+    width: '66%'
+  },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
