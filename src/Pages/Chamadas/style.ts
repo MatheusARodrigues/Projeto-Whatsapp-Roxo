@@ -5,6 +5,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#ede7f6',
   },
+
+  subtitle: {
+    marginLeft: 10,
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#bb86fc',
+  },
+
   callItem: {
     flexDirection: 'row',
     padding: 10,
