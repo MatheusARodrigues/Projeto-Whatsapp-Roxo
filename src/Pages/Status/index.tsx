@@ -42,7 +42,6 @@ export function Status() {
       time: "3 hours ago",
       image: "https://via.placeholder.com/150",
     },
-    // Adicione mais itens com IDs únicos, se necessário
   ];
 
   return (

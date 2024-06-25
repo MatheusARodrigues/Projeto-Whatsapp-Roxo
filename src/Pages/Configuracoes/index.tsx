@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Alert, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../../Components/Botao/CustomButton';
-import styles from './style';
-import { useTheme } from '../../Components/Tema/themeContext';
+import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from './style';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
 
 const Configuracoes = () => {
     const navigation = useNavigation();
-    const { toggleTheme } = useTheme();
+    const { theme, toggleTheme } = useTheme();
+    const themeStyles = getThemeStyles(theme);
     const [profileImage, setProfileImage] = useState<string>('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
     const [name, setName] = useState<string>('Usuário');
     const [recado, setRecado] = useState<string>('O justo é justo🏴‍☠️');
@@ -115,21 +117,51 @@ const Configuracoes = () => {
         );
     };
 
-    const handleProfileImageChange = async () => {
-        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    const handleProfileImageChange = () => {
+        Alert.alert(
+            "Alterar Foto de Perfil",
+            "Deseja mudar a foto de perfil?",
+            [
+                
+                {
+                    text: "Remover",
+                    onPress: async () => {
+                        try {
+                            await AsyncStorage.removeItem('profileImage');
+                            setProfileImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
+                        } catch (error) {
+                            console.log('Failed to remove profile image', error);
+                        }
+                    },
+                    style: "destructive"
+                },
+                {
+                    text: "Não",
+                    onPress: () => console.log("Ação cancelada"),
+                    style: "cancel"
+                },
+                    
+                {
+                    text: "Sim",
+                    onPress: async () => {
+                        let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-        if (permissionResult.granted === false) {
-            alert("Permissão para acessar a galeria é necessária!");
-            return;
-        }
+                        if (permissionResult.granted === false) {
+                            alert("Permissão para acessar a galeria é necessária!");
+                            return;
+                        }
 
-        let pickerResult = await ImagePicker.launchImageLibraryAsync();
+                        let pickerResult = await ImagePicker.launchImageLibraryAsync();
 
-        if (!pickerResult.canceled) {
-            setProfileImage(pickerResult.assets[0].uri);
-            saveSettings();
-            console.log(pickerResult);
-        }
+                        if (!pickerResult.canceled) {
+                            setProfileImage(pickerResult.assets[0].uri);
+                            saveSettings();
+                            console.log(pickerResult);
+                        }
+                    }
+                }
+            ]
+        );
     };
 
     const handleNameChange = (newName: string) => {
@@ -143,12 +175,12 @@ const Configuracoes = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, themeStyles.container]}>
             {wallpaper && <Image source={{ uri: wallpaper }} style={styles.wallpaper} />}
-            <Text style={styles.header}>Configurações</Text>
+            <Text style={[styles.header, themeStyles.headerConfigText]}>Configurações</Text>
             <View style={styles.messageContainer}>
                 <View style={styles.profileImageWrapper}>
-                    <Image source={{ uri: profileImage }} style={styles.profileImage} />
+                    <Image source={{ uri: profileImage }} style={[styles.profileImage, themeStyles.profileImage]} />
                     <TouchableOpacity style={styles.cameraIconContainer} onPress={handleProfileImageChange}>
                         <Image source={require('../../Assets/camera-icon.png')} style={styles.cameraIcon} />
                     </TouchableOpacity>
@@ -156,35 +188,35 @@ const Configuracoes = () => {
                 <View style={styles.inputContainer}>
                     <View style={styles.editableContainer}>
                         <TextInput
-                            style={[styles.input, isEditingName && styles.inputEditable]}
+                            style={[styles.input, isEditingName && styles.inputEditable, themeStyles.textInput]}
                             placeholder="Nome"
                             value={name}
                             onChangeText={handleNameChange}
                             editable={isEditingName}
-                            placeholderTextColor={'#fff'}
+                            placeholderTextColor={theme === 'dark' ? '#ccc' : '#000'}
                         />
                         <TouchableOpacity onPress={() => setIsEditingName(!isEditingName)}>
-                            <Image source={require('../../Assets/edit-icon.png')} style={styles.editIcon} />
+                        <MaterialCommunityIcons name="draw" size={24} color={theme === 'dark' ? '#4b0082' : '#935FB4'} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.editableContainer}>
                         <TextInput
-                            style={[styles.input, isEditingRecado && styles.inputEditable]}
+                            style={[styles.input, isEditingRecado && styles.inputEditable, themeStyles.textInput]}
                             placeholder="Recado"
                             value={recado}
                             onChangeText={handleRecadoChange}
                             editable={isEditingRecado}
-                            placeholderTextColor={'#fff'}
+                            placeholderTextColor={theme === 'dark' ? '#ccc' : '#000'}
                         />
                         <TouchableOpacity onPress={() => setIsEditingRecado(!isEditingRecado)}>
-                            <Image source={require('../../Assets/edit-icon.png')} style={styles.editIcon} />
+                        <MaterialCommunityIcons name="draw" size={24} color={theme === 'dark' ? '#4b0082' : '#935FB4'} />
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
-            <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Alterar Tema" onPress={handleThemeChange} />
-            <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Alterar Wallpaper" onPress={handleWallpaperChange} />
-            <CustomButton buttonStyle={styles.button} textStyle={{ color: 'black', fontSize: 18 }} title="Voltar" onPress={() => navigation.goBack()} />
+            <CustomButton buttonStyle={themeStyles.buttonConfig} textStyle={themeStyles.buttonText} title="Alterar Tema" onPress={handleThemeChange} />
+            <CustomButton buttonStyle={ themeStyles.buttonConfig} textStyle={themeStyles.buttonText} title="Alterar Wallpaper" onPress={handleWallpaperChange} />
+            <CustomButton buttonStyle={ themeStyles.buttonConfig} textStyle={themeStyles.buttonText} title="Voltar" onPress={() => navigation.goBack()} />
         </View>
     );
 };

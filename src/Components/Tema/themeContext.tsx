@@ -36,8 +36,15 @@ const lightTheme = StyleSheet.create({
   container: {
     backgroundColor: '#ede7f6',
   },
+  containerPerfil: {
+    backgroundColor: '#ede7f6',
+    height: '100%',
+  },
   header: {
     backgroundColor: '#4b0082',
+  },
+  headerConfigText: {
+    color: '#bb86fc',
   },
   headerText: {
     color: '#fff',
@@ -68,6 +75,21 @@ const lightTheme = StyleSheet.create({
   button: {
     backgroundColor: '#bb86fc',
   },
+  buttonConfig: {
+    marginTop: 10,
+    height: 50,
+    width: '100%',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#935FB4',
+    alignContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+},
   buttonText: {
     color: '#fff',
     alignContent: 'center',
@@ -155,11 +177,132 @@ const lightTheme = StyleSheet.create({
   recordButtonText: {
     color: '#fff',
   },
+  profileContainer: {
+    alignItems: "center",
+    marginBottom: 24,
+  },
+  profileLeave: {
+    flexDirection: "row",
+    gap: 90,
+    marginRight: 130,
+    marginTop: 20,
+  },
+  perfilImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 16,
+  },
+  profileName: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  profilePhone: {
+    fontSize: 16,
+    color: "#888",
+    marginBottom: 8,
+  },
+  perfilContainer: {
+    alignItems: "center",
+    marginBottom: 24,
+  },
+  perfilLeave: {
+    flexDirection: "row",
+    gap: 90,
+    marginRight: 130,
+    marginTop: 20,
+  },
+  profileDescription: {
+    fontSize: 16,
+    color: "#000",
+    textAlign: "justify",
+  },
+  sectionContainer: {
+    marginBottom: 24,
+    backgroundColor: "#bb86fc",
+    padding: 16,
+    width: 400,
+    marginLeft: 42,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  sectionContainerBlock: {
+    marginBottom: 24,
+    backgroundColor: "#bb86fc",
+    padding: 16,
+    width: 400,
+    marginLeft: 42,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+    gap: 15,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  sectionButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#4b0082",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  sectionButtonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  actionButton: {
+    paddingVertical: 15,
+    alignItems: "center",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  actionButtonText: {
+    fontSize: 16,
+  },
+
+  blockButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 20,
+    paddingRight: 40,
+  },
+
+  blockButtonText: {
+    color: "#000",
+  },
+  reportButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 20,
+    paddingRight: 30,
+  },
+  reportButtonText: {
+    color: "#000",
+  },
 });
 
 const darkTheme = StyleSheet.create({
   container: {
     backgroundColor: '#121212',
+  },
+  containerPerfil: {
+    backgroundColor: '#121212',
+    height: '100%',
+  },
+  headerConfigText: {
+    color: '#4b0082',
   },
   header: {
     backgroundColor: '#1f1f1f', 
@@ -193,6 +336,21 @@ const darkTheme = StyleSheet.create({
   button: {
     backgroundColor: '#4b0082', 
   },
+  buttonConfig: {
+    marginTop: 10,
+    height: 50,
+    width: '100%',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#4b0082',
+    alignContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+},
   buttonText: {
     color: '#fff',
     alignContent: 'center',
@@ -283,6 +441,113 @@ const darkTheme = StyleSheet.create({
   },
   recordButtonText: {
     color: '#fff',
+  },
+  perfilImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginBottom: 16,
+  },
+  profileName: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 8,
+    color: "#fff",
+  },
+  profilePhone: {
+    fontSize: 16,
+    color: "#888",
+    marginBottom: 8,
+  },
+  perfilContainer: {
+    alignItems: "center",
+    marginBottom: 24,
+  },
+  perfilLeave: {
+    flexDirection: "row",
+    gap: 90,
+    marginRight: 130,
+    marginTop: 20,
+  },
+  profileDescription: {
+    fontSize: 16,
+    color: "#fff",
+    textAlign: "justify",
+  },
+  sectionContainer: {
+    marginBottom: 24,
+    backgroundColor: "#4b0082",
+    padding: 16,
+    width: 400,
+    marginLeft: 42,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  sectionContainerBlock: {
+    marginBottom: 24,
+    backgroundColor: "#4b0082",
+    padding: 16,
+    width: 400,
+    marginLeft: 42,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+    gap: 15,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 8,
+    color: "#fff",
+  },
+  sectionButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    backgroundColor: "#bb86fc",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  sectionButtonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  actionButton: {
+    paddingVertical: 15,
+    alignItems: "center",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  actionButtonText: {
+    fontSize: 16,
+    color: "#fff",
+  },
+
+  blockButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 20,
+    paddingRight: 40,
+  },
+
+  blockButtonText: {
+    color: "#fff",
+  },
+  reportButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 20,
+    paddingRight: 30,
+  },
+  reportButtonText: {
+    color: "#fff",
   },
 });
 

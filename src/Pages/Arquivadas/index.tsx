@@ -40,6 +40,9 @@ const Arquivadas = () => {
 
   return (
     <View style={[baseStyles.container, themeStyles.container]}>
+      <Text style={themeStyles.archivedMessageInfo}>
+        Estas conversas permanecem arquivadas quando você recebe novas mensagens. Toque para mudar.
+      </Text>
       <FlatList
         data={archivedMessages}
         renderItem={renderMessage}
