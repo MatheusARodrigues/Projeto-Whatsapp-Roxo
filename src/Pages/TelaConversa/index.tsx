@@ -171,7 +171,10 @@ const TelaConversa = () => {
           <Image style={themeStyles.avatar} source={{ uri: getAvatarImage(phone) || 'https://via.placeholder.com/50' }} />
           <Text style={[themeStyles.contactName, themeStyles.headerText]}>{chatName}</Text>
         </TouchableOpacity>
-	<TouchableOpacity onPress={() => navigation.navigate('StackConfiguracoes')}>
+        <TouchableOpacity onPress={()=> navigation.navigate('StackChamadas')}>
+          <MaterialCommunityIcons style={themeStyles.chamada} name="phone" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
+        </TouchableOpacity>
+	      <TouchableOpacity onPress={() => navigation.navigate('StackConfiguracoes')}>
           <MaterialCommunityIcons style={themeStyles.pontos} name="dots-vertical" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
       </View>

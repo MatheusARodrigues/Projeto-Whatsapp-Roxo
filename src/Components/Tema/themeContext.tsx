@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
+import Chamadas from '../../Pages/Chamadas';
 
 type Theme = 'light' | 'dark';
 
@@ -149,6 +150,12 @@ const lightTheme = StyleSheet.create({
   pontos: {
     fontSize: 30,
     right: 10,
+    top: 10,
+    color: 'white', 
+  },
+  chamada: {
+    fontSize: 30,
+    right: 20,
     top: 10,
     color: 'white', 
   },
@@ -414,6 +421,12 @@ const darkTheme = StyleSheet.create({
   pontos: {
     fontSize: 30,
     right: 10,
+    top: 10,
+    color: '#bb86fc', 
+  },
+  chamada: {
+    fontSize: 30,
+    right: 20,
     top: 10,
     color: '#bb86fc', 
   },
