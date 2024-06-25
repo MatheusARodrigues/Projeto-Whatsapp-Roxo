@@ -3,7 +3,7 @@ import "react-native-gesture-handler";
 import { DrawerToggleButton, createDrawerNavigator } from "@react-navigation/drawer";
 import { Home } from "../Pages/Home";
 import React from "react";
-import Status from "../Pages/Status";
+import { Status } from "../Pages/Status";
 import { Chamadas } from "../Pages/Chamadas";
 import Arquivadas from "../Pages/Arquivadas";
 import { useAuth } from '../Hooks/useAuth';
