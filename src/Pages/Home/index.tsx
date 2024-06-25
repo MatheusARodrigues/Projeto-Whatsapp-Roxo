@@ -60,6 +60,14 @@ export function Home() {
 
   return (
     <View style={[baseStyles.container, themeStyles.container]}>
+      {showButton && (
+        <CustomButton
+          buttonStyle={[baseStyles.button, themeStyles.button]}
+          textStyle={themeStyles.buttonText}
+          title="Arquivadas"
+          onPress={handleArquivadas}
+        />
+      )}
       <FlatList
         data={messages}
         renderItem={renderMessage}

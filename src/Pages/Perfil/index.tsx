@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { styles } from "./style";
+import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
 import { useMessages } from "../../Components/Messages/MessageContext";
 
 type RootStackParamList = {
@@ -20,51 +20,53 @@ export function Perfil() {
   const route = useRoute<PerfilRouteProp>();
   const { name, phone, description, imageUri } = route.params;
   const navigation = useNavigation();
+  const { theme} = useTheme();
+  const themeStyles = getThemeStyles(theme);
   const { updateMessagePreview, getAvatarImage } = useMessages();
 
   return (
-    <ScrollView contentContainerStyle={styles.container} overScrollMode="never">
-      <View style={styles.profileContainer}>
-        <View style={styles.profileLeave}>
+    <ScrollView contentContainerStyle={themeStyles.containerPerfil} overScrollMode="never">
+      <View style={themeStyles.perfilContainer}>
+        <View style={themeStyles.perfilLeave}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons name="chevron-left" size={35} />
+            <MaterialCommunityIcons name="chevron-left" size={35} color={theme === 'dark' ? '#bb86fc' : '#4b0082'} />
           </TouchableOpacity>
           <Image
             source={{
               uri: getAvatarImage(phone) || "https://via.placeholder.com/50",
             }}
-            style={styles.profileImage}
+            style={themeStyles.perfilImage}
           />
         </View>
-        <Text style={styles.profileName}>{name}</Text>
-        <Text style={styles.profilePhone}>{phone}</Text>
+        <Text style={themeStyles.profileName}>{name}</Text>
+        <Text style={themeStyles.profilePhone}>{phone}</Text>
       </View>
-      <View style={styles.sectionContainer}>
-        <Text style={styles.profileDescription}>{description}</Text>
+      <View style={themeStyles.sectionContainer}>
+        <Text style={themeStyles.profileDescription}>{description}</Text>
       </View>
-      <View style={styles.sectionContainer}>
-        <Text style={styles.sectionTitle}>Mídia, Links e Docs</Text>
-        <TouchableOpacity style={styles.sectionButton}>
-          <Text style={styles.sectionButtonText}>Ver tudo</Text>
+      <View style={themeStyles.sectionContainer}>
+        <Text style={themeStyles.sectionTitle}>Mídia, Links e Docs</Text>
+        <TouchableOpacity style={themeStyles.sectionButton}>
+          <Text style={themeStyles.sectionButtonText}>Ver tudo</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.sectionContainer}>
-        <TouchableOpacity style={styles.actionButton}>
-          <Text style={styles.actionButtonText}>Criar grupo com {name}</Text>
+      <View style={themeStyles.sectionContainer}>
+        <TouchableOpacity style={themeStyles.actionButton}>
+          <Text style={themeStyles.actionButtonText}>Criar grupo com {name}</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.sectionContainerBlock}>
-        <TouchableOpacity style={[styles.actionButton, styles.blockButton]}>
+      <View style={themeStyles.sectionContainerBlock}>
+        <TouchableOpacity style={[themeStyles.actionButton, themeStyles.blockButton]}>
           <MaterialCommunityIcons name="block-helper" size={22} color={"red"} />
-          <Text style={[styles.actionButtonText, styles.blockButtonText]}>
+          <Text style={[themeStyles.actionButtonText, themeStyles.blockButtonText]}>
             Bloquear {name}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.actionButton, styles.reportButton]}>
+        <TouchableOpacity style={[themeStyles.actionButton, themeStyles.reportButton]}>
           <MaterialCommunityIcons name="alert" size={22} color={"red"} />
-          <Text style={[styles.actionButtonText, styles.reportButtonText]}>
+          <Text style={[themeStyles.actionButtonText, themeStyles.reportButtonText]}>
             Denunciar {name}
           </Text>
         </TouchableOpacity>
