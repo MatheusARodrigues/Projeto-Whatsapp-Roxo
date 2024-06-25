@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 type Message = {
   id: string;
@@ -7,6 +7,7 @@ type Message = {
   date: string;
   description: string;
   phone: string;
+  imageUri: string;
 };
 
 type MessagesContextType = {
@@ -15,15 +16,17 @@ type MessagesContextType = {
   archiveMessage: (messageId: string) => void;
   unarchiveMessage: (messageId: string) => void;
   updateMessagePreview: (messageId: string, newPreview: string) => void;
+  getImageUri: (phone: string) => string | undefined;
+  getAvatarImage: (phone: string) => string | undefined;
 };
 
 const initialMessages: Message[] = [
-    { id: '1', contact: '+55 24 99324-0212', phone: '+55 24 99324-0212', preview: '', date: new Date().toLocaleDateString(), description: 'Apaixonada por viagens e fotografia 📸🌍. Sempre buscando novas aventuras e memórias! Siga meu Instagram para ver minhas últimas fotos e histórias: @mariasilva. Disponível para colaborações e parcerias - entre em contato!'},
-    { id: '2', contact: 'Aula 2024', phone: '+55 24 99324-2012', preview: '', date: new Date().toLocaleDateString(), description: 'Engenheiro de software 💻 e gamer nas horas vagas 🎮. Amante de tecnologia e inovação, curioso sobre IA e desenvolvimento de apps. Me siga no Twitter para atualizações sobre projetos: @joaosouza_dev.'},
-    { id: '3', contact: ':)', phone: '+55 24 99324-0212', preview: '', date: new Date().toLocaleDateString(), description: 'esigner gráfico e artista digital 🎨. Transformando ideias em realidade visual. Confira meu portfólio online e me siga para mais atualizações: @artesdabela. Aberta a freelas e colaborações criativas.'},
-    { id: '4', contact: 'Patricia', phone: '+55 24 99324-8212', preview: '', date: new Date().toLocaleDateString(), description: 'Especialista em marketing digital 📈 e estrategista de conteúdo. Ajudando marcas a crescer e alcançar seus objetivos. Siga minhas dicas e insights no LinkedIn: Patricia Lima. Sempre em busca de novos desafios e oportunidades!'},
-    { id: '5', contact: 'Juju', phone: '+55 24 99324-1221', preview: '', date: new Date().toLocaleDateString(), description: 'Estudante de medicina 🩺 e apaixonada por ciência e saúde. Compartilhando meu dia a dia e dicas de estudo no Instagram: @med.julia. Em busca de aprender e crescer a cada dia. Vamos juntos nessa jornada!'},
-    { id: '6', contact: 'Eduardo Pereira', phone: '+55 24 99324-1201', preview: '', date: new Date().toLocaleDateString(), description: 'Fotógrafo de natureza e vida selvagem 📷🌿. Capturando a beleza do mundo natural através das lentes. Confira meu trabalho no site: www.eduardopereirafotos.com. Disponível para projetos e workshops.'}
+  { id: '1', contact: '+55 24 99324-0212', phone: '+55 24 99324-0212', preview: '.', date: new Date().toLocaleDateString(), description: '...', imageUri: 'https://static.escolakids.uol.com.br/2019/07/coala.jpg' },
+  { id: '2', contact: 'Aula 2024', phone: '+55 24 99324-2012', preview: '.', date: new Date().toLocaleDateString(), description: '...', imageUri: 'https://alconpet.com.br/common/img/pet/img_lg/chinchila.webp' },
+  { id: '3', contact: ':)', phone: '+55 24 99324-0212', preview: '.', date: new Date().toLocaleDateString(), description: '...', imageUri: 'https://s2.glbimg.com/shVyfsOkEsvzsdRQWbutCuMJrxs=/400x350/top/e.glbimg.com/og/ed/f/original/2013/12/03/como_criar_tucano.jpg' },
+  { id: '4', contact: 'Patricia', phone: '+55 24 99324-8212', preview: '.', date: new Date().toLocaleDateString(), description: '...', imageUri: 'https://ak-br-pic.kwai.net/kimg/EKzM1y8qmgEKAnMzEg1waG90by1vdmVyc2VhGoQBdXBpYy8yMDIyLzExLzI1LzIzL0JNakF5TWpFeE1qVXlNekUwTlRCZk1UVXdNREF4TXpjeU9UVXlPRGszWHpFMU1ERXdNVFF3TXpNMU1EUXhNVjh5WHpNPV9vZmZuX0I1OGJhMjUzZWNkYTY4NjFjNGQ2ODRlZDgxMDMxMzdiNi53ZWJw.webp' },
+  { id: '5', contact: 'Juju', phone: '+55 24 99324-1221', preview: '.', date: new Date().toLocaleDateString(), description: '...', imageUri: 'https://super.abril.com.br/wp-content/uploads/2018/07/568d54ba0e216336d722d657thinkstockphotos-163945072.jpeg?&w=720&crop=1' },
+  { id: '6', contact: 'Eduardo Pereira', phone: '+55 24 99324-1201', preview: '.', date: new Date().toLocaleDateString(), description: '...', imageUri: 'https://static.wikia.nocookie.net/mundo-animal/images/d/d1/Narval.jpg/revision/latest?cb=20150831002447&path-prefix=pt' }
 ];
 
 const MessagesContext = createContext<MessagesContextType>({
@@ -31,7 +34,9 @@ const MessagesContext = createContext<MessagesContextType>({
   archivedMessages: [],
   archiveMessage: () => {},
   unarchiveMessage: () => {},
-  updateMessagePreview: () => {}
+  updateMessagePreview: () => {},
+  getImageUri: () => undefined,
+  getAvatarImage: () => undefined,
 });
 
 export const useMessages = () => {
@@ -63,13 +68,23 @@ export const MessagesProvider: React.FC<MessagesProviderProps> = ({ children }) 
   };
 
   const updateMessagePreview = (messageId: string, newPreview: string) => {
-    setMessages((prevMessages) => prevMessages.map((message) => 
+    setMessages((prevMessages) => prevMessages.map((message) =>
       message.id === messageId ? { ...message, preview: newPreview } : message
     ));
   };
 
+  const getImageUri = (phone: string) => {
+    const message = messages.find((msg) => msg.phone === phone);
+    return message ? message.imageUri : undefined;
+  };
+
+  const getAvatarImage = (phone: string): string | undefined => {
+    const message = messages.find((msg) => msg.phone === phone);
+    return message ? message.imageUri : undefined;
+  };
+
   return (
-    <MessagesContext.Provider value={{ messages, archivedMessages, archiveMessage, unarchiveMessage, updateMessagePreview }}>
+    <MessagesContext.Provider value={{ messages, archivedMessages, archiveMessage, unarchiveMessage, updateMessagePreview, getImageUri, getAvatarImage }}>
       {children}
     </MessagesContext.Provider>
   );

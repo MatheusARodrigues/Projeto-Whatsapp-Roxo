@@ -45,7 +45,7 @@ export function Home() {
         style={[baseStyles.messageContainer, themeStyles.messageContainer]}
         onPress={() => navigation.navigate('StackTelaConversas', { chatId: item.id, chatName: item.contact, phone: item.phone, description: item.description })}
       >
-        <Image style={baseStyles.image} source={{ uri: 'https://via.placeholder.com/50' }} />
+        <Image style={baseStyles.image} source={{ uri: item.imageUri }} />
         <View style={baseStyles.textContainer}>
           <Text style={[baseStyles.contact, themeStyles.contact]}>{item.contact}</Text>
           <Text style={[baseStyles.preview, themeStyles.preview]}>{item.preview}</Text>
