@@ -89,7 +89,7 @@ export function Home() {
     </View>
     {modalOpen && 
     <Modal visible={modalOpen} animationType='slide' transparent={true}>
-      <View style={{height: '80%', marginTop: '15%'}}>
+      <View style={{height: '100%', paddingTop: '15%'}}>
       <Configuracoes/>
       </View>
     </Modal>

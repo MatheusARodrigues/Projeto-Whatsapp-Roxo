@@ -7,6 +7,7 @@ import baseStyles from './style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
 import { useMessages } from '../../Components/Messages/MessageContext';
+import { useAuth } from '../../Hooks/useAuth';
 
 type RootStackParamList = {
   StackTelaConversas: { chatId: string; chatName: string; phone: string };
@@ -34,6 +35,8 @@ const TelaConversa = () => {
   const [newMessage, setNewMessage] = useState('');
   const [recording, setRecording] = useState<Audio.Recording | undefined>(undefined);
   const [recordings, setRecordings] = useState<ChatMessage[]>([]);
+
+  const {setModalOpen, modalOpen} = useAuth();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -188,7 +191,7 @@ const TelaConversa = () => {
         <TouchableOpacity onPress={handleCall}>
           <MaterialCommunityIcons style={themeStyles.chamada} name="phone" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
-	      <TouchableOpacity onPress={() => navigation.navigate('StackConfiguracoes')}>
+	      <TouchableOpacity onPress={() => setModalOpen(!modalOpen)}>
           <MaterialCommunityIcons style={themeStyles.pontos} name="dots-vertical" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
       </View>

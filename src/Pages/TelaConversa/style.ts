@@ -9,8 +9,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 25,
-    paddingTop: 40,
-    position: 'relative', // Adicione para controlar a posição absoluta dos ícones
+    position: 'relative', 
   },
   headerText: {
     fontSize: 20,
