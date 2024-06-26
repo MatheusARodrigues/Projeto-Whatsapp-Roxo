@@ -38,6 +38,17 @@ const TelaConversa = () => {
 
   const {setModalOpen, modalOpen} = useAuth();
 
+  const resetMessages = async () => {
+    try {
+      await AsyncStorage.removeItem(`messages_${chatId}`);
+      setMessages([]);
+      Alert.alert("Mensagens resetadas com sucesso");
+    } catch (error) {
+      console.log('Failed to reset messages', error);
+      Alert.alert("Erro ao resetar mensagens");
+    }
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       loadWallpaper();
@@ -198,6 +209,9 @@ const TelaConversa = () => {
         </TouchableOpacity>
 	      <TouchableOpacity onPress={() => setModalOpen(!modalOpen)}>
           <MaterialCommunityIcons style={themeStyles.pontos} name="dots-vertical" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={resetMessages}>
+        <MaterialCommunityIcons style={themeStyles.lixeira} name="trash-can-outline" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
       </View>
       <FlatList
