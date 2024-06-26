@@ -1,39 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Image, FlatList } from 'react-native';
-import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import AvatarPerfil from '../../Assets/avatar-default.png'; 
-
+import AvatarPerfil from '../../Assets/avatar-default.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useMessages } from '../../Components/Messages/MessageContext';
 import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
 
-
 export function Status() {
   const [searchText, setSearchText] = useState('');
-  const { messages, currentUser, fetchUserByPhone } = useMessages();
+  const { messages, fetchUserByPhone } = useMessages();
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const isFocused = useIsFocused();
   const { theme } = useTheme();
   const themeStyles = getThemeStyles(theme);
 
   useFocusEffect(
     React.useCallback(() => {
-      fetchUserByPhone('user_phone_number');
+      const loadProfileImage = async () => {
+        try {
+          const storedImageUri = await AsyncStorage.getItem('profileImage');
+          if (storedImageUri) {
+            setProfileImage(storedImageUri);
+          }
+        } catch (error) {
+          console.log('Failed to load profile image', error);
+        }
+      };
+
       loadProfileImage();
+
+      const intervalId = setInterval(() => {
+        loadProfileImage();
+      }, 10);
+
+      return () => clearInterval(intervalId);
     }, [])
   );
 
-  const loadProfileImage = async () => {
-    try {
-      const storedImageUri = await AsyncStorage.getItem('profileImage');
-      if (storedImageUri) {
-        setProfileImage(storedImageUri);
-      }
-    } catch (error) {
-      console.log('Failed to load profile image', error);
-    }
-  };
+  useEffect(() => {
+    fetchUserByPhone('user_phone_number');
+  }, []);
 
   const filteredMessages = messages.filter(item =>
     item.contact.toLowerCase().includes(searchText.toLowerCase())
