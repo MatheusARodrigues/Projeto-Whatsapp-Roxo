@@ -46,6 +46,7 @@ export function Chamadas() {
   useFocusEffect(
     React.useCallback(() => {
       loadCalls();
+      removeCalls();
     }, [])
   );
 
@@ -58,6 +59,10 @@ export function Chamadas() {
     } catch (error) {
       console.log("Failed to load calls", error);
     }
+  };
+
+  const removeCalls = async () => {
+      const storedCalls = await AsyncStorage.removeItem("calls");
   };
 
   const fetchCallsByContact = (contactName: string) => {
