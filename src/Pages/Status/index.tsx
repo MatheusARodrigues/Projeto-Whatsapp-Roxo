@@ -1,56 +1,40 @@
-import React, { useState } from 'react'
-import { View, Text, FlatList, StyleSheet, TextInput, Image } from 'react-native';
-import { useNavigation, useIsFocused } from '@react-navigation/native'
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Image, FlatList } from 'react-native';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import  AvatarPerfil  from '../../Assets/avatar-default.png'; 
+import AvatarPerfil from '../../Assets/avatar-default.png'; 
 import { styles } from './style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useMessages } from '../../Components/Messages/MessageContext';
 
 export function Status() {
-
-  // const [data, setData] = useState([]);    
-  // const navigation = useNavigation();
-  // const isFocused = useIsFocused();
   const [searchText, setSearchText] = useState('');
+  const { messages, currentUser, fetchUserByPhone } = useMessages();
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const isFocused = useIsFocused();
 
-  const atualizacoes = [
-    {
-      id: "1",
-      name: "Patricia",
-      time: "15 minutes ago",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: "2",
-      name: "Juju",
-      time: "30 minutes ago",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: "3",
-      name: "Eduardo",
-      time: "1 hour ago",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: "4",
-      name: ":)",
-      time: "2 hours ago",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: "5",
-      name: "Aula 2024",
-      time: "3 hours ago",
-      image: "https://via.placeholder.com/150",
-    },
-  ];
-
-
-  const filteredAtualizacoes = atualizacoes.filter(item =>
-    item.name.toLowerCase().includes(searchText.toLowerCase())
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUserByPhone('user_phone_number');
+      loadProfileImage();
+    }, [])
   );
 
-  
+  const loadProfileImage = async () => {
+    try {
+      const storedImageUri = await AsyncStorage.getItem('profileImage');
+      if (storedImageUri) {
+        setProfileImage(storedImageUri);
+      }
+    } catch (error) {
+      console.log('Failed to load profile image', error);
+    }
+  };
+
+  const filteredMessages = messages.filter(item =>
+    item.contact.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Atualizações</Text>
@@ -63,7 +47,7 @@ export function Status() {
       <Text style={styles.subtitle}>Status</Text>
       <View style={styles.divider} />
       <View style={styles.StatusContainer}>
-        <Image source={ AvatarPerfil } style={styles.StatusAvatar} />
+        <Image source={profileImage ? { uri: profileImage } : AvatarPerfil} style={styles.StatusAvatar} />
         <View style={styles.StatusInfo}>
           <Text style={styles.StatusText}>Meu Status</Text>
           <Text style={styles.StatusTime}>Toque para atualizar seu status</Text>
@@ -90,7 +74,7 @@ export function Status() {
       <FlatList
         style={{ height: 400 }}
         horizontal={false}
-        data={atualizacoes}
+        data={filteredMessages}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.boxArray}>
@@ -101,10 +85,10 @@ export function Status() {
                 marginBottom: 5,
               }}
             >
-              <Image source={{ uri: item.image }} style={styles.avatar} />
+              <Image source={{ uri: item.imageUri }} style={styles.avatar} />
               <View style={styles.atualizacoesInfo}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.time}>{item.time}</Text>
+                <Text style={styles.name}>{item.contact}</Text>
+                <Text style={styles.time}>{item.date}</Text>
               </View>
             </View>
             <View style={styles.divider3} />
