@@ -129,7 +129,6 @@ const Configuracoes = () => {
             "Alterar Foto de Perfil",
             "Deseja mudar a foto de perfil?",
             [
-                
                 {
                     text: "Remover",
                     onPress: async () => {
@@ -147,29 +146,53 @@ const Configuracoes = () => {
                     onPress: () => console.log("Ação cancelada"),
                     style: "cancel"
                 },
-                    
                 {
                     text: "Sim",
                     onPress: async () => {
                         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
+    
                         if (permissionResult.granted === false) {
                             alert("Permissão para acessar a galeria é necessária!");
                             return;
                         }
-
+    
                         let pickerResult = await ImagePicker.launchImageLibraryAsync();
-
+    
                         if (!pickerResult.canceled) {
-                            setProfileImage(pickerResult.assets[0].uri);
-                            saveSettings();
-                            console.log(pickerResult);
+                            try {
+                                const imageUri = pickerResult.assets[0].uri;
+                                await AsyncStorage.setItem('profileImage', imageUri);
+                                setProfileImage(imageUri);
+                                console.log(pickerResult);
+                            } catch (error) {
+                                console.log('Failed to save profile image', error);
+                            }
                         }
                     }
                 }
             ]
         );
     };
+
+
+    useEffect(() => {
+        const loadProfileImage = async () => {
+            try {
+                const storedImageUri = await AsyncStorage.getItem('profileImage');
+                if (storedImageUri) {
+                    setProfileImage(storedImageUri);
+                } else {
+                    setProfileImage('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png');
+                }
+            } catch (error) {
+                console.log('Failed to load profile image', error);
+            }
+        };
+    
+        loadProfileImage();
+    }, []);
+
+
 
     const handleNameChange = (newName: string) => {
         setName(newName);
