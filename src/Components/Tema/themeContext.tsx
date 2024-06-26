@@ -36,6 +36,7 @@ export const useTheme = (): ThemeContextType => {
 const lightTheme = StyleSheet.create({
   container: {
     backgroundColor: '#ede7f6',
+    height: '100%',
   },
   containerPerfil: {
     backgroundColor: '#bb86fc',
@@ -335,6 +336,7 @@ const lightTheme = StyleSheet.create({
 const darkTheme = StyleSheet.create({
   container: {
     backgroundColor: '#121212',
+    height: '100%',
   },
   containerPerfil: {
     backgroundColor: '#121212',

@@ -24,9 +24,7 @@ export function Home() {
     }
   }, [isFocused]);
 
-  const handleMenuPress = () => {
-    navigation.navigate('StackConfiguracoes');
-  };
+
 
   const handleArquivadas = () => {
     navigation.navigate('Arquivadas');
@@ -89,7 +87,7 @@ export function Home() {
     </View>
     {modalOpen && 
     <Modal visible={modalOpen} animationType='slide' transparent={true}>
-      <View style={{height: '100%', paddingTop: '15%'}}>
+      <View style={{height: '100%', paddingTop: '10%'}}>
       <Configuracoes/>
       </View>
     </Modal>

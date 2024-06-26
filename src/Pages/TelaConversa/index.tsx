@@ -42,6 +42,7 @@ const TelaConversa = () => {
     React.useCallback(() => {
       loadWallpaper();
       loadMessages();
+      // removeMessages();
     }, [])
   );
 
@@ -76,6 +77,10 @@ const TelaConversa = () => {
       console.log('Failed to save messages', error);
     }
   };
+
+//   const removeMessages = async () => {
+//     const storedMessages = await AsyncStorage.removeItem(`messages_${chatId}`);
+// };
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {

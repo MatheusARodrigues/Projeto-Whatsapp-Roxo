@@ -23,6 +23,7 @@ const Configuracoes = () => {
 
     useEffect(() => {
         loadSettings();
+        //removeSettings();
     }, []);
 
     const loadSettings = async () => {
@@ -41,6 +42,10 @@ const Configuracoes = () => {
         }
     };
 
+    // const removeSettings = async () => {
+    // const storedName = await AsyncStorage.removeItem('name');
+    // const storedRecado = await AsyncStorage.removeItem('recado');
+    // };
     const saveSettings = async () => {
         try {
             await AsyncStorage.setItem('name', name);
