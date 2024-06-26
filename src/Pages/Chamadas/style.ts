@@ -1,22 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ede7f6',
-  },
-
-  subtitle: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#bb86fc',
-    marginBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#1DB499',
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop: 20,
-  },
 
   callItem: {
     flexDirection: 'row',
@@ -34,7 +18,7 @@ const styles = StyleSheet.create({
   },
   nome: {
     fontSize: 16,
-    fontWeight: 'bold',
+    color: '#fff',
   },
   hora: {
     fontSize: 14,

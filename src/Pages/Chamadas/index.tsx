@@ -3,6 +3,7 @@ import { View, Text, Image, FlatList } from "react-native";
 import { useNavigation, useRoute, RouteProp, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./style";
+import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 interface ChamadasProps {
@@ -38,6 +39,8 @@ export function Chamadas() {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, "StackChamadas">>();
   const { contactName } = route.params || {};
+  const { theme } = useTheme();
+  const themeStyles = getThemeStyles(theme);
   const [callList, setCallList] = useState<ChamadasProps[]>([]);
 
   useFocusEffect(
@@ -67,7 +70,7 @@ export function Chamadas() {
     <View style={styles.callItem}>
       <Image source={{ uri: item.foto }} style={styles.foto} />
       <View style={styles.callDetails}>
-        <Text style={styles.nome}>{item.nome}</Text>
+        <Text style={themeStyles.nome}>{item.nome}</Text>
         <Text style={styles.hora}>{item.hora}</Text>
       </View>
       <Ionicons
@@ -79,8 +82,8 @@ export function Chamadas() {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.subtitle}>Recentes</Text>
+    <View style={themeStyles.container}>
+      <Text style={themeStyles.subtitle}>Recentes</Text>
       <FlatList
         data={displayedCalls}
         keyExtractor={(item) => item.id}

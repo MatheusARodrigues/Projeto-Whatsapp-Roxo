@@ -315,6 +315,21 @@ const lightTheme = StyleSheet.create({
   reportButtonText: {
     color: "#000",
   },
+  subtitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#bb86fc',
+    marginBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#1DB499',
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 20,
+  },
+  nome: {
+    fontSize: 16,
+    color: '#4b0082',
+  },
 });
 
 const darkTheme = StyleSheet.create({
@@ -589,6 +604,21 @@ const darkTheme = StyleSheet.create({
   },
   reportButtonText: {
     color: "#fff",
+  },
+  subtitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#4b0082',
+    marginBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#1DB499',
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 20,
+  },
+  nome: {
+    fontSize: 16,
+    color: '#bb86fc',
   },
 });
 
