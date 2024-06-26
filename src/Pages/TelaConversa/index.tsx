@@ -36,7 +36,7 @@ const TelaConversa = () => {
   const [recording, setRecording] = useState<Audio.Recording | undefined>(undefined);
   const [recordings, setRecordings] = useState<ChatMessage[]>([]);
 
-  const {setModalOpen, modalOpen} = useAuth();
+  const { setModalOpen, modalOpen } = useAuth();
 
   const resetMessages = async () => {
     try {
@@ -51,35 +51,40 @@ const TelaConversa = () => {
 
   useFocusEffect(
     React.useCallback(() => {
+      const loadWallpaper = async () => {
+        try {
+          const storedWallpaper = await AsyncStorage.getItem('wallpaper');
+          setWallpaper(storedWallpaper);
+        } catch (error) {
+          console.log('Failed to load wallpaper', error);
+        }
+      };
+
+      const loadMessages = async () => {
+        try {
+          const storedMessages = await AsyncStorage.getItem(`messages_${chatId}`);
+          if (storedMessages) {
+            setMessages(JSON.parse(storedMessages));
+          }
+        } catch (error) {
+          console.log('Failed to load messages', error);
+        }
+      };
+
       loadWallpaper();
       loadMessages();
 
+      const intervalId = setInterval(() => {
+        loadWallpaper();
+      }, 1000);
+
+      return () => clearInterval(intervalId);
     }, [])
   );
 
   useEffect(() => {
     fetchUserByPhone(phone);
   }, [phone]);
-
-  const loadWallpaper = async () => {
-    try {
-      const storedWallpaper = await AsyncStorage.getItem('wallpaper');
-      setWallpaper(storedWallpaper);
-    } catch (error) {
-      console.log('Failed to load wallpaper', error);
-    }
-  };
-
-  const loadMessages = async () => {
-    try {
-      const storedMessages = await AsyncStorage.getItem(`messages_${chatId}`);
-      if (storedMessages) {
-        setMessages(JSON.parse(storedMessages));
-      }
-    } catch (error) {
-      console.log('Failed to load messages', error);
-    }
-  };
 
   const saveMessages = async (updatedMessages: ChatMessage[]) => {
     try {
@@ -88,6 +93,7 @@ const TelaConversa = () => {
       console.log('Failed to save messages', error);
     }
   };
+
   const handleSendMessage = () => {
     if (newMessage.trim()) {
       const newChatMessage: ChatMessage = {
@@ -162,7 +168,7 @@ const TelaConversa = () => {
 
   async function stopRecording() {
     if (!recording) return;
-    
+
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
     const uri = recording.getURI();
@@ -202,11 +208,11 @@ const TelaConversa = () => {
         <TouchableOpacity onPress={handleCall}>
           <MaterialCommunityIcons style={themeStyles.chamada} name="phone" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
-	      <TouchableOpacity onPress={() => setModalOpen(!modalOpen)}>
+        <TouchableOpacity onPress={() => setModalOpen(!modalOpen)}>
           <MaterialCommunityIcons style={themeStyles.pontos} name="dots-vertical" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
         <TouchableOpacity onPress={resetMessages}>
-        <MaterialCommunityIcons style={themeStyles.lixeira} name="trash-can-outline" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
+          <MaterialCommunityIcons style={themeStyles.lixeira} name="trash-can-outline" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
       </View>
       <FlatList
@@ -225,8 +231,8 @@ const TelaConversa = () => {
         <TouchableOpacity onPress={recording ? stopRecording : startRecording} style={themeStyles.recordButton}>
           <MaterialCommunityIcons name={recording ? "stop" : "microphone"} size={24} color={theme === 'dark' ? '#bb86fc' : '#4b0082'} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleSendMessage} style={[baseStyles.sendButton, themeStyles.sendButton]}>
-          <Text style={themeStyles.sendButtonText}>Enviar</Text>
+        <TouchableOpacity onPress={handleSendMessage} style={themeStyles.sendButton}>
+          <MaterialCommunityIcons name="send" size={24} color={theme === 'dark' ? '#bb86fc' : '#4b0082'} />
         </TouchableOpacity>
       </View>
     </View>
