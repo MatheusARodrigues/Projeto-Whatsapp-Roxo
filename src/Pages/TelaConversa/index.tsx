@@ -46,7 +46,6 @@ const TelaConversa = () => {
     fetchUserByPhone(phone);
   }, [phone]);
 
-
   const loadWallpaper = async () => {
     try {
       const storedWallpaper = await AsyncStorage.getItem('wallpaper');
@@ -102,6 +101,21 @@ const TelaConversa = () => {
     } else {
       Alert.alert('Erro', 'Dados do usuário não encontrados.');
     }
+  };
+
+  const handleCall = async () => {
+    Alert.alert("Ligando", `Ligando para ${chatName}`);
+    const newCall = {
+      id: Math.random().toString(),
+      nome: chatName,
+      foto: getAvatarImage(phone) || 'https://via.placeholder.com/50',
+      hora: new Date().toLocaleTimeString(),
+      tipo: "feita"
+    };
+    const storedCalls = await AsyncStorage.getItem('calls');
+    const callList = storedCalls ? JSON.parse(storedCalls) : [];
+    callList.push(newCall);
+    await AsyncStorage.setItem('calls', JSON.stringify(callList));
   };
 
   const renderMessage: ListRenderItem<ChatMessage> = ({ item }) => (
@@ -171,7 +185,7 @@ const TelaConversa = () => {
           <Image style={themeStyles.avatar} source={{ uri: getAvatarImage(phone) || 'https://via.placeholder.com/50' }} />
           <Text style={[themeStyles.contactName, themeStyles.headerText]}>{chatName}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=> navigation.navigate('StackChamadas')}>
+        <TouchableOpacity onPress={handleCall}>
           <MaterialCommunityIcons style={themeStyles.chamada} name="phone" size={24} color={theme === 'dark' ? '#bb86fc' : '#fff'} />
         </TouchableOpacity>
 	      <TouchableOpacity onPress={() => navigation.navigate('StackConfiguracoes')}>

@@ -18,10 +18,21 @@ type User = {
   description: string;
 };
 
+type Call = {
+  id: string;
+  contact: string;
+  type: 'recebida' | 'feita';
+  date: string;
+  photo: string;
+};
+
+// Ajuste no tipo MessagesContextType
 type MessagesContextType = {
   messages: Message[];
   archivedMessages: Message[];
   currentUser: User | null;
+  calls: Call[];
+  fetchCallsByContact: (contact: string) => Call[];
   archiveMessage: (messageId: string) => void;
   unarchiveMessage: (messageId: string) => void;
   updateMessagePreview: (messageId: string, newPreview: string) => void;
@@ -29,12 +40,15 @@ type MessagesContextType = {
   fetchUserByPhone: (phone: string) => Promise<void>;
 };
 
-const initialMessages: Message[] = []; // Inicialmente vazio
+const initialMessages: Message[] = [];
+const initialCalls: Call[] = []
 
 const MessagesContext = createContext<MessagesContextType>({
   messages: initialMessages,
   archivedMessages: [],
   currentUser: null,
+  calls: initialCalls,
+  fetchCallsByContact: () => [],
   archiveMessage: () => {},
   unarchiveMessage: () => {},
   updateMessagePreview: () => {},
@@ -54,6 +68,7 @@ export const MessagesProvider: React.FC<MessagesProviderProps> = ({ children }) 
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [archivedMessages, setArchivedMessages] = useState<Message[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [calls, setCalls] = useState<Call[]>(initialCalls);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -61,7 +76,7 @@ export const MessagesProvider: React.FC<MessagesProviderProps> = ({ children }) 
         const response = await axios.get('https://6678658a0bd45250561e8a0a.mockapi.io/Wpp');
         setMessages(response.data);
       } catch (error) {
-        console.error('Erro ao buscar mensagens da API:', error);
+        console.error('Erro ao buscar dados da API:', error);
       }
     };
     fetchMessages();
@@ -110,8 +125,12 @@ export const MessagesProvider: React.FC<MessagesProviderProps> = ({ children }) 
     }
   };
 
+  const fetchCallsByContact = (contact: string) => {
+    return calls.filter(call => call.contact === contact);
+  };
+
   return (
-    <MessagesContext.Provider value={{ messages, archivedMessages, currentUser, archiveMessage, unarchiveMessage, updateMessagePreview, getAvatarImage, fetchUserByPhone }}>
+    <MessagesContext.Provider value={{ messages, archivedMessages, currentUser, calls, fetchCallsByContact, archiveMessage, unarchiveMessage, updateMessagePreview, getAvatarImage, fetchUserByPhone }}>
       {children}
     </MessagesContext.Provider>
   );
