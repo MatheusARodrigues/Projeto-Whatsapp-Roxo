@@ -363,6 +363,134 @@ const lightTheme = StyleSheet.create({
     fontSize: 16,
     color: '#4b0082',
   },
+
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#bb86fc',
+    marginBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#1DB499',
+    marginLeft: 5,
+    marginTop: 20,
+  },
+
+  subtitleStatus: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#4a148c',
+    marginTop: 20,
+    marginLeft: 5,
+    textAlign: "left",
+  },
+
+  subtitleStatus2: {
+    fontSize: 15,
+    color: '#4a148c',
+    marginTop: 20,
+    marginLeft: 5,
+    textAlign: "left",
+  },
+
+  atualizacoesItem: {
+    marginLeft: 5,
+    flexDirection: "row",
+    marginBottom: 15,
+    alignItems: "center",
+  },
+
+  avatarStatus: {
+    marginLeft: 5,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
+  },
+
+  atualizacoesInfo: {
+    flex: 1,
+  },
+
+  name: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  
+  time: {
+    fontSize: 14,
+    color: '#4a148c',
+  },
+  boxArray: {
+    gap: 5,
+    marginBottom: 15,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#aaa',
+    marginVertical: 5,
+  },
+  divider2: {
+    height: 1,
+    backgroundColor: '#aaa',
+    marginVertical: 10,
+    marginBottom: 14
+  },
+
+  divider3: {
+    height: 1,
+    backgroundColor: '#aaa',
+    
+  },
+
+  StatusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+    height: 60,
+  },
+
+  StatusAvatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10
+  },
+
+  StatusInfo: {
+    flex: 1
+  },
+
+  StatusText: {
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+
+  StatusTime: {
+    fontSize: 14,
+    color: '#666'
+  },
+
+  iconsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  icon: {
+    marginLeft: 5,
+    marginTop: 5,
+    marginRight: 8
+  },
+
+  searchBar: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    marginLeft: 5,
+    marginRight: 5,
+  },
 });
 
 const darkTheme = StyleSheet.create({
@@ -687,6 +815,136 @@ const darkTheme = StyleSheet.create({
   nome: {
     fontSize: 16,
     color: '#bb86fc',
+  },
+
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#4a148c',
+    marginBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#1DB499',
+    marginLeft: 5,
+    marginTop: 20,
+  },
+
+  subtitleStatus: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#bb86fc',
+    marginTop: 20,
+    marginLeft: 5,
+    textAlign: "left",
+  },
+
+  subtitleStatus2: {
+    fontSize: 15,
+    color: '#bb86fc',
+    marginTop: 20,
+    marginLeft: 5,
+    textAlign: "left",
+  },
+
+  atualizacoesItem: {
+    marginLeft: 5,
+    flexDirection: "row",
+    marginBottom: 15,
+    alignItems: "center",
+  },
+
+  avatarStatus: {
+    marginLeft: 5,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
+  },
+
+  atualizacoesInfo: {
+    flex: 1,
+  },
+
+  name: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: "bold",
+  },
+  
+  time: {
+    fontSize: 14,
+    color: '#bb86fc',
+  },
+  boxArray: {
+    gap: 5,
+    marginBottom: 15,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#aaa',
+    marginVertical: 5,
+  },
+  divider2: {
+    height: 1,
+    backgroundColor: '#aaa',
+    marginVertical: 10,
+    marginBottom: 14
+  },
+
+  divider3: {
+    height: 1,
+    backgroundColor: '#aaa',
+    
+  },
+
+  StatusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+    height: 60,
+  },
+
+  StatusAvatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10
+  },
+
+  StatusInfo: {
+    flex: 1
+  },
+
+  StatusText: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold'
+  },
+
+  StatusTime: {
+    fontSize: 14,
+    color: '#666'
+  },
+
+  iconsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+
+  icon: {
+    marginLeft: 5,
+    marginTop: 5,
+    marginRight: 8
+  },
+
+  searchBar: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    marginVertical: 10,
+    marginLeft: 5,
+    marginRight: 5,
   },
 });
 
