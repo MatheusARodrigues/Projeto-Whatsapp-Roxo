@@ -15,7 +15,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>('light');
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
   return (
@@ -371,7 +371,7 @@ const lightTheme = StyleSheet.create({
     marginBottom: 10,
     borderBottomWidth: 2,
     borderBottomColor: '#1DB499',
-    marginLeft: 5,
+    marginLeft: 10,
     marginTop: 20,
   },
 
@@ -380,7 +380,7 @@ const lightTheme = StyleSheet.create({
     fontSize: 20,
     color: '#4a148c',
     marginTop: 20,
-    marginLeft: 5,
+    marginLeft: 10,
     textAlign: "left",
   },
 
@@ -453,7 +453,8 @@ const lightTheme = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    marginRight: 10
+    marginRight: 10,
+    marginLeft: 5
   },
 
   StatusInfo: {
@@ -824,7 +825,7 @@ const darkTheme = StyleSheet.create({
     marginBottom: 10,
     borderBottomWidth: 2,
     borderBottomColor: '#1DB499',
-    marginLeft: 5,
+    marginLeft: 10,
     marginTop: 20,
   },
 
@@ -904,6 +905,7 @@ const darkTheme = StyleSheet.create({
   },
 
   StatusAvatar: {
+    marginLeft: 5,
     width: 50,
     height: 50,
     borderRadius: 25,

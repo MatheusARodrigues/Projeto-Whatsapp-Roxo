@@ -51,22 +51,27 @@ export function Status() {
       <Text style={themeStyles.subtitleStatus}>Status</Text>
       <View style={themeStyles.divider} />
       <View style={themeStyles.StatusContainer}>
-        <Image source={profileImage ? { uri: profileImage } : AvatarPerfil} style={themeStyles.StatusAvatar} />
+        <Image
+          source={profileImage ? { uri: profileImage } : AvatarPerfil}
+          style={themeStyles.StatusAvatar}
+        />
         <View style={themeStyles.StatusInfo}>
           <Text style={themeStyles.StatusText}>Meu Status</Text>
-          <Text style={themeStyles.StatusTime}>Toque para atualizar seu status</Text>
+          <Text style={themeStyles.StatusTime}>
+            Toque para atualizar seu status
+          </Text>
         </View>
         <View style={themeStyles.iconsContainer}>
           <FontAwesome
             name="camera"
             size={24}
-            color={theme === 'dark' ? '#4b0082' : '#935FB4'}
+            color={theme === "dark" ? "#4b0082" : "#935FB4"}
             style={themeStyles.icon}
           />
           <MaterialIcons
             name="edit"
             size={24}
-            color={theme === 'dark' ? '#4b0082' : '#935FB4'}
+            color={theme === "dark" ? "#4b0082" : "#935FB4"}
             style={themeStyles.icon}
           />
         </View>
@@ -89,7 +94,10 @@ export function Status() {
                 marginBottom: 5,
               }}
             >
-              <Image source={{ uri: item.imageUri }} style={themeStyles.avatarStatus} />
+              <Image
+                source={{ uri: item.imageUri }}
+                style={themeStyles.avatarStatus}
+              />
               <View style={themeStyles.atualizacoesInfo}>
                 <Text style={themeStyles.name}>{item.contact}</Text>
                 <Text style={themeStyles.time}>{item.date}</Text>

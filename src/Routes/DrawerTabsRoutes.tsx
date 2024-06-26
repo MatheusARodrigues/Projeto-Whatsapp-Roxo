@@ -43,7 +43,8 @@ const CustomDrawer = () => {
       <DrawerToggleButton tintColor="#fff" />
       <Image source={IconImage} style={{ height: 40, width: 40 }} />
       <TouchableOpacity onPress={handleConfig}>
-        <MaterialCommunityIcons  name="dots-vertical" size={24} />
+        <MaterialCommunityIcons  name="dots-vertical" size={24} color={'white'}
+ />
       </TouchableOpacity>
     </View>
   );
@@ -78,9 +79,16 @@ export function DrawerTabsRoutes() {
             backgroundColor: "#4b0082",
           },
           drawerLabel: ({ focused }) => (
-            <View style={{flexDirection: 'row', alignItems:'center'}}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Icons name="home" color={focused ? "#fff" : "#aaa"} size={30} />
-              <Text style={{ fontSize: 20, color: focused ? "#fff" : "#aaa", marginLeft: 20, alignSelf:'center' }}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: focused ? "#fff" : "#aaa",
+                  marginLeft: 20,
+                  alignSelf: "center",
+                }}
+              >
                 Home
               </Text>
             </View>
@@ -95,13 +103,20 @@ export function DrawerTabsRoutes() {
             backgroundColor: "#4b0082",
           },
           drawerLabel: ({ focused }) => (
-            <View style={{flexDirection: 'row', alignItems:'center'}}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Icons
                 name="albums-outline"
                 color={focused ? "#fff" : "#aaa"}
                 size={30}
               />
-              <Text style={{ fontSize: 20, color: focused ? "#fff" : "#aaa", marginLeft: 20, alignSelf:'center'}}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: focused ? "#fff" : "#aaa",
+                  marginLeft: 20,
+                  alignSelf: "center",
+                }}
+              >
                 Status
               </Text>
             </View>
@@ -117,9 +132,16 @@ export function DrawerTabsRoutes() {
             backgroundColor: "#4b0082",
           },
           drawerLabel: ({ focused }) => (
-            <View style={{flexDirection: 'row', alignItems:'center'}}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Icons name="call" color={focused ? "#fff" : "#aaa"} size={30} />
-              <Text style={{ fontSize: 20, color: focused ? "#fff" : "#aaa", marginLeft: 20, alignSelf:'center' }}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: focused ? "#fff" : "#aaa",
+                  marginLeft: 20,
+                  alignSelf: "center",
+                }}
+              >
                 Chamadas
               </Text>
             </View>
@@ -134,13 +156,20 @@ export function DrawerTabsRoutes() {
             backgroundColor: "#4b0082",
           },
           drawerLabel: ({ focused }) => (
-            <View style={{flexDirection: 'row', alignItems:'center'}}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Icons
                 name="archive"
                 color={focused ? "#fff" : "#aaa"}
                 size={30}
               />
-              <Text style={{ fontSize: 20, color: focused ? "#fff" : "#aaa", marginLeft: 20, alignSelf:'center' }}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: focused ? "#fff" : "#aaa",
+                  marginLeft: 20,
+                  alignSelf: "center",
+                }}
+              >
                 Arquivadas
               </Text>
             </View>
