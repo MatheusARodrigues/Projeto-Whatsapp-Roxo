@@ -110,7 +110,10 @@ const lightTheme = StyleSheet.create({
     backgroundColor: '#fff', 
   },
   sendButton: {
-    backgroundColor: '#bb86fc', 
+    backgroundColor: '#bb86fc',
+    padding: 10,
+    marginLeft: 5,
+    borderRadius: 10,
   },
   sendButtonText: {
     color: '#fff', 
@@ -572,6 +575,9 @@ const darkTheme = StyleSheet.create({
   },
   sendButton: {
     backgroundColor: '#4b0082', 
+    padding: 10,
+    marginLeft: 5,
+    borderRadius: 10,
   },
   sendButtonText: {
     color: '#fff', 
