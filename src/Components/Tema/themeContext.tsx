@@ -316,6 +316,26 @@ const lightTheme = StyleSheet.create({
   reportButtonText: {
     color: "#000",
   },
+  modalView: {
+    width: "80%",
+    borderRadius: 10,
+    padding: 20,
+    backgroundColor: 'white',
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 15,
+  },
+  reasonText: {
+    fontSize: 16,
+  },
   subtitle: {
     fontSize: 30,
     fontWeight: 'bold',
@@ -606,6 +626,28 @@ const darkTheme = StyleSheet.create({
   },
   reportButtonText: {
     color: "#fff",
+  },
+  modalView: {
+    width: "80%",
+    backgroundColor: "#1C0030",
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 15,
+    color: '#ddd',
+  },
+  reasonText: {
+    fontSize: 16,
+    color: '#ddd',
   },
   subtitle: {
     fontSize: 30,

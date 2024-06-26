@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
 import { useMessages } from "../../Components/Messages/MessageContext";
+import { ModalReport } from "../../Components/ModalComponent/ModalReport";
 
 type RootStackParamList = {
   StackPerfil: {
@@ -23,6 +24,11 @@ export function Perfil() {
   const { theme} = useTheme();
   const themeStyles = getThemeStyles(theme);
   const { updateMessagePreview, getAvatarImage } = useMessages();
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const handleReportSelect = (reason: string) => {
+    setModalVisible(false);
+  };
 
   return (
     <ScrollView contentContainerStyle={themeStyles.containerPerfil} overScrollMode="never">
@@ -64,13 +70,19 @@ export function Perfil() {
             Bloquear {name}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[themeStyles.actionButton, themeStyles.reportButton]}>
+        <TouchableOpacity style={[themeStyles.actionButton, themeStyles.reportButton]} onPress={() => setModalVisible(true)}>
           <MaterialCommunityIcons name="alert" size={22} color={"red"} />
           <Text style={[themeStyles.actionButtonText, themeStyles.reportButtonText]}>
             Denunciar {name}
           </Text>
         </TouchableOpacity>
       </View>
+      <ModalReport
+        visible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        onSelectReason={handleReportSelect}
+        name={name}
+      />
     </ScrollView>
   );
 }
