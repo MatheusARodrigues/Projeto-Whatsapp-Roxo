@@ -155,6 +155,18 @@ const lightTheme = StyleSheet.create({
     top: 10,
     color: 'white', 
   },
+  lixeira: {
+    fontSize: 30,
+    right: 120,
+    top: 10,
+    color: 'white', 
+  },
+  lixeiraChamadas: {
+    fontSize: 30,
+    right: -425,
+    top: -45,
+    color: '#bb86fc', 
+  },
   chamada: {
     fontSize: 30,
     right: 20,
@@ -478,6 +490,18 @@ const darkTheme = StyleSheet.create({
     right: 10,
     top: 10,
     color: '#bb86fc', 
+  },
+  lixeira: {
+    fontSize: 30,
+    right: 120,
+    top: 10,
+    color: '#bb86fc', 
+  },
+  lixeiraChamadas: {
+    fontSize: 30,
+    right: -425,
+    top: -45,
+    color: '#4b0082', 
   },
   chamada: {
     fontSize: 30,
