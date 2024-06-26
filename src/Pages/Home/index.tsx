@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, ListRenderItem, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, ListRenderItem, NativeSyntheticEvent, NativeScrollEvent, Modal, Button } from 'react-native';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { useTheme, getThemeStyles } from '../../Components/Tema/themeContext';
 import { useMessages } from '../../Components/Messages/MessageContext';
 import baseStyles from './style';
 import CustomButton from '../../Components/Botao/CustomButton';
+import { useAuth } from '../../Hooks/useAuth';
+import Configuracoes from '../Configuracoes';
 
 export function Home() {
   const navigation = useNavigation();
@@ -14,6 +16,7 @@ export function Home() {
   const { messages, archivedMessages, archiveMessage } = useMessages();
   const [showButton, setShowButton] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const {modalOpen, setModalOpen} = useAuth();
 
   useEffect(() => {
     if (isFocused) {
@@ -59,6 +62,7 @@ export function Home() {
   );
 
   return (
+    <>
     <View style={[baseStyles.container, themeStyles.container]}>
       {showButton && (
         <CustomButton
@@ -83,5 +87,13 @@ export function Home() {
         </Text>
       </View>
     </View>
+    {modalOpen && 
+    <Modal visible={modalOpen} animationType='slide' transparent={true}>
+      <View style={{height: '80%', marginTop: '15%'}}>
+      <Configuracoes/>
+      </View>
+    </Modal>
+    }
+    </>
   );
 }
